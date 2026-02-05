@@ -1,0 +1,739 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: clamp(1.25rem, 5vw, 2rem);
+  padding-top: max(clamp(1.5rem, 6vw, 2.5rem), var(--safe-top));
+  padding-bottom: max(clamp(1.5rem, 6vw, 2.5rem), var(--safe-bottom));
+}
+
+.title {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.accordionItem {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 0.75rem;
+}
+
+.accordionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a316e;
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.accordionHeader:hover {
+  background: #f5f7fa;
+}
+
+.accordionHeader:active {
+  background: #e8ecf1;
+}
+
+.accordionTitle {
+  flex: 1;
+}
+
+.accordionIcon {
+  font-size: 0.7rem;
+  color: #0a316e;
+  opacity: 0.9;
+  transition: transform 0.25s ease;
+}
+
+.accordionIcon[data-open="false"] {
+  transform: rotate(-90deg);
+}
+
+.accordionPanel {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.accordionPanel[data-open="true"] {
+  max-height: 70vh;
+}
+
+.accordionPanel[data-open="false"] {
+  max-height: 0;
+}
+
+.panelContent {
+  background: #fafbfc;
+  padding: clamp(1rem, 3vw, 1.25rem);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.label {
+  display: block;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-on-surface);
+}
+
+.label:first-of-type {
+  margin-top: 0;
+}
+
+.required {
+  color: #c00;
+}
+
+.hint {
+  font-weight: 400;
+  color: var(--text-muted-on-surface);
+}
+
+.input,
+.select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.input::placeholder {
+  color: var(--text-muted-on-surface);
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.25);
+}
+
+.input[aria-invalid="true"],
+.select[aria-invalid="true"] {
+  border-color: #c00;
+}
+
+.select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.static {
+  min-height: 44px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.95rem;
+  font-family: ui-monospace, monospace;
+  color: var(--text-muted-on-surface);
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-sm);
+}
+
+.toggleRow,
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggleRow {
+  margin-top: 0.25rem;
+}
+
+.radioLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  font-size: 1rem;
+  color: var(--text-on-surface);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: #c00;
+}
+
+.charCount {
+  font-size: 0.8rem;
+  color: var(--text-muted-on-surface);
+}
+
+/* Trader Skill Level section */
+.skillAddRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.skillSelect {
+  min-height: 40px;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.skillAddBtn {
+  min-height: 40px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skillEmpty {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted-on-surface);
+  font-style: italic;
+}
+
+.skillListScroll {
+  max-height: 8.5rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.skillList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skillItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
+}
+
+.skillItem:last-child {
+  border-bottom: none;
+}
+
+.skillDisplay {
+  font-size: 0.95rem;
+  color: var(--text-on-surface);
+}
+
+.skillBadgePrimary,
+.skillBadgeSecondary {
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.skillBadgePrimary {
+  background: rgba(0, 119, 255, 0.2);
+  color: #0052b3;
+}
+
+.skillBadgeSecondary {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-muted-on-surface);
+}
+
+.skillActions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.skillEditBtn,
+.skillRemoveBtn {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: transparent;
+  color: var(--text-muted-on-surface);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skillEditBtn:hover,
+.skillRemoveBtn:hover {
+  color: var(--text-on-surface);
+}
+
+.skillEditRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+  align-items: center;
+}
+
+.skillEditRow .skillSelect {
+  flex: 1;
+  min-width: 80px;
+}
+
+.skillSaveBtn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skillCancelBtn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted-on-surface);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skillRemoveInEditBtn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  color: #c00;
+  background: transparent;
+  border: 1px solid rgba(204, 0, 0, 0.4);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skillRemoveInEditBtn:hover {
+  background: rgba(204, 0, 0, 0.08);
+}
+
+/* Preferences section (weekly day cards) */
+.prefDateRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.prefField {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.prefFieldLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted-on-surface);
+}
+
+.prefDateInput {
+  min-height: 40px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-sm);
+}
+
+.prefDateInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.prefCardList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.prefCardItem {
+  margin: 0;
+}
+
+.prefCard {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.prefCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.prefCardHeader:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.prefCardDay {
+  flex: 1;
+  min-width: 0;
+}
+
+.prefBadgePreference {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c2410c;
+  background: #ffedd5;
+  border-radius: 9999px;
+}
+
+.prefBadgeNoPreference {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #166534;
+  background: #dcfce7;
+  border-radius: 9999px;
+}
+
+.prefCardChevron {
+  font-size: 0.65rem;
+  color: var(--text-muted-on-surface);
+  transition: transform 0.25s ease;
+}
+
+.prefCardChevron[data-open="false"] {
+  transform: rotate(-90deg);
+}
+
+.prefCardPanel {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.prefCardPanel[data-open="true"] {
+  max-height: 280px;
+}
+
+.prefCardPanel[data-open="false"] {
+  max-height: 0;
+}
+
+.prefCardBody {
+  padding: 0.75rem;
+  padding-top: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.prefSelect {
+  min-height: 38px;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-sm);
+  width: 100%;
+  cursor: pointer;
+}
+
+.prefSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Preferences read-only view */
+.prefViewSummary {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.prefViewDateRangeField {
+  margin-bottom: 0.5rem;
+}
+
+.prefViewDateRangeLabel {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted-on-surface);
+  margin-bottom: 0.2rem;
+}
+
+.prefViewDateRangeValue {
+  font-size: 0.9rem;
+  color: var(--text-on-surface);
+}
+
+.prefViewDayList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prefViewDayRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.9rem;
+}
+
+.prefViewDayRow:last-child {
+  border-bottom: none;
+}
+
+.prefViewDayName {
+  font-weight: 500;
+  color: var(--text-on-surface);
+  flex-shrink: 0;
+}
+
+.prefViewDayDetail {
+  color: var(--text-on-surface);
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.prefViewDayMuted {
+  color: var(--text-muted-on-surface);
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.prefEditBtn {
+  min-height: 40px;
+  padding: 0.4rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.prefEditBtn:hover {
+  background: #0069d9;
+}
+
+.prefDoneBtn {
+  min-height: 40px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted-on-surface);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: 0.5rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.prefDoneBtn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-on-surface);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.submitBtn {
+  min-height: 48px;
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.submitBtn:hover {
+  background: #0066dd;
+}
+
+.cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cancelBtn:hover {
+  color: var(--text);
+}
+
+.notFound {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.notFound a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Availability card in trader profile */
+.availabilityEmpty {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted-on-surface);
+}
+
+.availabilityList {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.availabilityItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.6rem 0.75rem;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-sm);
+}
+
+.availabilityType {
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.availabilityDates {
+  font-size: 0.95rem;
+  color: var(--text-on-surface);
+}
+
+.availabilityBadge {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.avlBadgePending {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.avlBadgeConfirmed {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.avlBadgeCancelled {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.availabilityNote {
+  display: block;
+  width: 100%;
+  font-size: 0.9rem;
+  color: var(--text-muted-on-surface);
+  font-style: italic;
+}
+
+.availabilityLink {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.availabilityLink:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,138 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Pinned under banner: search + location stay fixed, only cards scroll */
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding-bottom: 0.25rem;
+}
+
+.searchInput,
+.locationSelect {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: var(--surface);
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.searchInput::placeholder {
+  color: var(--text-muted-on-surface);
+}
+
+.searchInput:focus,
+.locationSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+.locationSelect {
+  flex: 0 1 auto;
+  min-width: 120px;
+  max-width: 50%;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.scrollWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: #9fc0dc;
+  border: 1px solid rgba(0, 51, 102, 0.35);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+}
+
+.empty {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.empty a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.noResults {
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.25rem);
+  background: #f8fafc;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:active {
+  transform: scale(0.99);
+}
+
+@media (hover: hover) {
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.cardLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.cardName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.cardAlias {
+  font-size: 0.9rem;
+  color: var(--text-muted-on-surface);
+}
+
+.cardLocation {
+  font-size: 0.95rem;
+  color: var(--text-on-surface);
+  white-space: nowrap;
+  flex-shrink: 0;
+}

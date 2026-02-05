@@ -1,0 +1,235 @@
+/* Same layout as Availability Report: filters at top, scrollable card list below */
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding-bottom: 0.25rem;
+}
+
+.sportSelect,
+.typeSelect {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: var(--surface);
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.typeSelect {
+  flex: 0 1 auto;
+  min-width: 140px;
+  max-width: 50%;
+}
+
+.sportSelect:focus,
+.typeSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+/* Scrollable area: dark blue background, white cards */
+.scrollWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: #002244;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Location card: white */
+.locationCard {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.locationHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: clamp(1rem, 3vw, 1.25rem);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.locationHeader:hover {
+  filter: brightness(0.97);
+}
+
+.locationTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.locationCount {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted-on-surface);
+}
+
+.locationChevron {
+  font-size: 0.7rem;
+  color: var(--text-muted-on-surface);
+  opacity: 0.8;
+  transition: transform 0.25s ease;
+}
+
+.locationChevron[data-open="false"] {
+  transform: rotate(-90deg);
+}
+
+/* Nested: sport → type → level */
+.nestedGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.sportBlock,
+.typeBlock,
+.levelBlock {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.sportHeader,
+.typeHeader,
+.levelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+  background: #f8fafc;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sportHeader:hover,
+.typeHeader:hover,
+.levelHeader:hover {
+  filter: brightness(0.97);
+}
+
+.sportTitle,
+.typeTitle,
+.levelTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.count {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.chevron {
+  font-size: 0.65rem;
+  opacity: 0.8;
+  transition: transform 0.25s ease;
+}
+
+.chevron[data-open="false"] {
+  transform: rotate(-90deg);
+}
+
+.typeGroups,
+.levelGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem 0.75rem;
+}
+
+.traderList {
+  margin: 0;
+  padding: 0.25rem 0;
+  list-style: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: #fff;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  min-width: 0;
+}
+
+.name:hover {
+  text-decoration: underline;
+}
+
+.alias {
+  font-size: 0.9rem;
+  color: var(--text-muted-on-surface);
+  flex-shrink: 0;
+}
+
+.empty {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+}

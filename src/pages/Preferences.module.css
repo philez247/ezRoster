@@ -1,0 +1,515 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: clamp(1.25rem, 5vw, 2rem);
+  padding-top: max(clamp(1.5rem, 6vw, 2.5rem), var(--safe-top));
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 480px;
+}
+
+.label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.traderSelect {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: var(--surface);
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.traderSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.resetAllRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.resetAllBtn {
+  min-height: 36px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.resetAllBtn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.resetMessage {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.dateRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dateRow .field {
+  flex: 1;
+  min-width: 140px;
+}
+
+.dateInput {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Day cards list */
+.cardList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardItem {
+  margin: 0;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cardHeader:hover {
+  background: #f8fafc;
+}
+
+.cardDay {
+  flex: 1;
+  min-width: 0;
+}
+
+.badgePreference {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #c2410c;
+  background: #ffedd5;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.badgeNoPreference {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #166534;
+  background: #dcfce7;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.cardChevron {
+  font-size: 0.7rem;
+  color: var(--text-muted-on-surface);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.cardChevron[data-open="false"] {
+  transform: rotate(-90deg);
+}
+
+.cardPanel {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.cardPanel[data-open="true"] {
+  max-height: 320px;
+}
+
+.cardPanel[data-open="false"] {
+  max-height: 0;
+}
+
+.cardBody {
+  padding: 1rem;
+  padding-top: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #fafbfc;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fieldLabel {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted-on-surface);
+}
+
+.select {
+  min-height: 40px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-sm);
+  width: 100%;
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.saveBtn {
+  min-height: 44px;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.saveBtn:hover {
+  background: #0069d9;
+}
+
+.saved {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* Read-only view */
+.viewSummary {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+}
+
+.viewDateRangeField {
+  margin-bottom: 0.75rem;
+}
+
+.viewDateRangeLabel {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted-on-surface);
+  margin-bottom: 0.25rem;
+}
+
+.viewDateRangeValue {
+  font-size: 0.95rem;
+  color: var(--text-on-surface);
+}
+
+.rangeSelect {
+  width: 100%;
+  min-height: 40px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: 0.25rem;
+}
+
+.rangeSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.addRangeBtn {
+  min-height: 36px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.addRangeBtn:hover {
+  background: rgba(0, 123, 255, 0.08);
+}
+
+.viewDayList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.viewDayRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.95rem;
+}
+
+.viewDayRow:last-child {
+  border-bottom: none;
+}
+
+.viewDayName {
+  font-weight: 500;
+  color: var(--text-on-surface);
+  flex-shrink: 0;
+}
+
+.viewDayDetail {
+  color: var(--text-on-surface);
+  text-align: right;
+}
+
+.viewDayMuted {
+  color: var(--text-muted-on-surface);
+  text-align: right;
+}
+
+.editPrefBtn {
+  min-height: 44px;
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #007bff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: 1rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.editPrefBtn:hover {
+  background: #0069d9;
+}
+
+.donePrefBtn {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-on-surface);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.donePrefBtn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* First view: date range cards */
+.rangeCardsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rangeCardsIntro {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.rangeCardList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rangeCardItem {
+  margin: 0;
+}
+
+.rangeCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-on-surface);
+  text-align: left;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rangeCard:hover {
+  background: #f8fafc;
+  border-color: var(--accent);
+}
+
+.rangeCardLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.rangeCardChevron {
+  font-size: 1.1rem;
+  color: var(--text-muted-on-surface);
+  flex-shrink: 0;
+}
+
+.rangeCardsEmpty {
+  padding: 1.5rem 1rem;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rangeCardsEmptyText {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted-on-surface);
+}
+
+.backToRanges {
+  display: inline-block;
+  margin-bottom: 0;
+  padding: 0.25rem 0;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  align-self: flex-start;
+}
+
+.backToRanges:hover {
+  color: var(--text);
+  text-decoration: underline;
+}

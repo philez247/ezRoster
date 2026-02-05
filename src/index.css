@@ -1,0 +1,69 @@
+:root {
+  /* Logo-inspired: deep blue background */
+  --bg: #003366;
+  --bg-center: #0066cc;
+  --bg-edge: #002244;
+  /* Metallic silver surfaces (cards, panels) */
+  --surface: linear-gradient(165deg, #c4cad4 0%, #a8b0bc 50%, #909aa8 100%);
+  --surface-solid: #a8b0bc;
+  --surface-hover: linear-gradient(165deg, #d0d6e0 0%, #b4bcc8 50%, #9ca6b4 100%);
+  --surface-hover-solid: #b4bcc8;
+  /* High-contrast text on blue & silver */
+  --text: #ffffff;
+  --text-on-surface: #1a2332;
+  --text-muted: #e0e6ee;
+  --text-muted-on-surface: #4a5568;
+  /* Accent: vibrant blue from logo */
+  --accent: #0077ff;
+  --accent-hover: #0066dd;
+  --accent-dim: #0052b3;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --safe-top: env(safe-area-inset-top, 0);
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+  /* Metallic edge highlight */
+  --edge-light: rgba(255, 255, 255, 0.35);
+  --edge-shadow: rgba(0, 0, 0, 0.15);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: radial-gradient(ellipse 120% 100% at 50% 0%, var(--bg-center) 0%, var(--bg) 45%, var(--bg-edge) 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  line-height: 1.5;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+#root {
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}

@@ -1,0 +1,244 @@
+/* Matches Availability Report layout */
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.desc {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding-bottom: 0.25rem;
+}
+
+.label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.dateInput {
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: var(--surface);
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+.scrollWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: #002244;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+}
+
+.section {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.gameList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gameCard {
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 51, 102, 0.1);
+}
+
+.sportTag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0a316e;
+  margin-bottom: 0.25rem;
+}
+
+.timesStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--text-muted-on-surface);
+}
+
+.eventName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+  margin: 0.35rem 0 0.15rem;
+}
+
+.gameStatus {
+  font-size: 0.85rem;
+  color: var(--text-muted-on-surface);
+}
+
+.availabilityGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .availabilityGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.availabilityBlock {
+  background: #f8fafc;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 51, 102, 0.1);
+  padding: 0.75rem;
+}
+
+.availabilityBlock[data-status="available"] {
+  border-left: 4px solid #22c55e;
+}
+
+.availabilityBlock[data-status="unavailable"] {
+  border-left: 4px solid #ef4444;
+}
+
+.availabilityBlock[data-status="no_preference"] {
+  border-left: 4px solid #94a3b8;
+}
+
+.availabilityBlock[data-status="preferred_off"] {
+  border-left: 4px solid #f59e0b;
+}
+
+.blockTitle {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.traderList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.traderList li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.traderList li:last-child {
+  border-bottom: none;
+}
+
+.traderList .name {
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.traderList .name:hover {
+  text-decoration: underline;
+}
+
+.alias {
+  margin-left: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--text-muted-on-surface);
+}
+
+.location {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted-on-surface);
+}
+
+.traderSport {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-size: 0.75rem;
+  background: #e2e8f0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+.badge {
+  font-size: 0.7rem;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  margin-left: 0.35rem;
+}
+
+.empty {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted-on-surface);
+}
