@@ -145,19 +145,17 @@ app.use('/api', (req, res) => {
   })
 })
 
-// Serve the React app in production (Render)
-if (process.env.NODE_ENV === 'production') {
-  const distPath = path.join(__dirname, '..', 'dist')
-  app.use(express.static(distPath))
+// Serve built React app from /dist (for Render production)
+const distPath = path.join(__dirname, '..', 'dist')
+app.use(express.static(distPath))
 
-  // SPA fallback: send index.html for any non-API route
-  app.get('*', (req, res) => {
-    if (req.path.startsWith('/api')) {
-      return res.status(404).json({ error: 'API route not found' })
-    }
-    res.sendFile(path.join(distPath, 'index.html'))
-  })
-}
+// SPA fallback: serve index.html for any non-API route
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'API route not found' })
+  }
+  res.sendFile(path.join(distPath, 'index.html'))
+})
 
 app.listen(PORT, () => {
   console.log(`ESPN proxy listening on http://localhost:${PORT}`)
