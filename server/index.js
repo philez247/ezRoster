@@ -7,9 +7,14 @@
 import express from 'express'
 import cors from 'cors'
 import fetch from 'node-fetch'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 const PORT = process.env.PORT || 3001
 const app = express()
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 app.use(cors({
   origin: '*',
@@ -139,6 +144,20 @@ app.use('/api', (req, res) => {
     error: 'API route not found. Restart the proxy server so new routes (e.g. NCAAM/CBB) are loaded: npm run server (or npm run dev:all).',
   })
 })
+
+// Serve the React app in production (Render)
+if (process.env.NODE_ENV === 'production') {
+  const distPath = path.join(__dirname, '..', 'dist')
+  app.use(express.static(distPath))
+
+  // SPA fallback: send index.html for any non-API route
+  app.get('*', (req, res) => {
+    if (req.path.startsWith('/api')) {
+      return res.status(404).json({ error: 'API route not found' })
+    }
+    res.sendFile(path.join(distPath, 'index.html'))
+  })
+}
 
 app.listen(PORT, () => {
   console.log(`ESPN proxy listening on http://localhost:${PORT}`)
