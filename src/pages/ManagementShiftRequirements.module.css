@@ -1,0 +1,259 @@
+/* Matches DayReport / AvailabilityReport layout */
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.desc {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  padding-bottom: 0.25rem;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.select {
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: var(--surface);
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  min-width: 10rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+.prompt {
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Dark blue scrollable area - matches DayReport */
+.scrollWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: #002244;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+}
+
+.section {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.summaryRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.summaryItem {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.dayList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dayCard {
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.dayHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #fff;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dayHeader:hover {
+  background: #f0f7fc;
+}
+
+.dayLabel {
+  flex: 0 0 auto;
+}
+
+.dayMeta {
+  flex: 1;
+  text-align: right;
+  margin: 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.chevron {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.dayDetails {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid rgba(0, 51, 102, 0.08);
+}
+
+.noGames {
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted-on-surface);
+}
+
+.gameList {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gameRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 51, 102, 0.1);
+}
+
+.gameMain {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sportTag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0a316e;
+  padding: 0.15rem 0.4rem;
+  background: rgba(10, 49, 110, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.eventName {
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.gameTime {
+  font-size: 0.9rem;
+  color: var(--text-muted-on-surface);
+}
+
+.gameAssignment {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+.assignedLabel {
+  font-weight: 600;
+  color: var(--text-muted-on-surface);
+}
+
+.traderChip {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  background: rgba(10, 49, 110, 0.1);
+  color: #0a316e;
+  border-radius: var(--radius-sm);
+}
+
+.unassigned {
+  color: var(--text-muted-on-surface);
+}

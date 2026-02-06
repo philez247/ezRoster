@@ -88,6 +88,8 @@ export default function NbaScraperPage() {
   /** After fetch: { games, fetchedAtIso, added, updated } — show compare modal, then Sync or Ignore */
   const [pendingMerge, setPendingMerge] = useState(null)
   const [showSyncModal, setShowSyncModal] = useState(false)
+  const [syncPreview, setSyncPreview] = useState(null)
+  const [mergeReport, setMergeReport] = useState(null)
 
   function formatProgressDate(yyyymmdd) {
     if (!yyyymmdd || yyyymmdd.length !== 8) return '—'

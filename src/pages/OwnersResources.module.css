@@ -1,0 +1,1390 @@
+.back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.desc {
+  margin: 0.5rem 0 1rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.filterBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  min-width: 0;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+  align-items: flex-end;
+  min-width: 0;
+  flex: 1;
+}
+
+.viewWeekBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-self: stretch;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.viewWeekBtn {
+  flex: 1;
+  min-height: 0;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #1a6fd4;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.viewWeekBtn:hover:not(:disabled) {
+  background: #2a7fe8;
+}
+
+.viewWeekBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resourcesPage {
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.resourcesContent {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+}
+
+.dayScrollWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 2px solid rgba(0, 51, 102, 0.4);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 100px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.customSelectWrap {
+  position: relative;
+}
+
+.filterSelect {
+  min-height: 40px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.selectValue {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectChevron {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.dropdownList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.dropdownOption {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dropdownOption:hover,
+.dropdownOption:focus {
+  background: #e8f4fc;
+}
+
+.dropdownOption[aria-selected="true"] {
+  font-weight: 600;
+  color: #0a316e;
+}
+
+.hint {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.dayCardList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.dayCard {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-align: left;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dayCard:hover {
+  background: #e8f4fc;
+}
+
+.dayCardMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+}
+
+.dayCardTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dayLabel {
+  flex: 1;
+  min-width: 0;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.dayCardBottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.dayMetaLeft {
+  flex-shrink: 0;
+}
+
+.dayMetaRight {
+  flex-shrink: 0;
+}
+
+.chevron {
+  font-size: 0.75rem;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.selectPrompt {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Day detail */
+.dayDetailTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+.dayDetailHeaderField {
+  min-width: 0;
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dayDetailHeaderRow1 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.dayDetailHeaderRow2 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-top: 0.2rem;
+}
+
+.dayDetailTopRightBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.backBtn,
+.viewBtn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #0a316e;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+}
+
+.backBtn:hover,
+.viewBtn:hover {
+  background: #e8f4fc;
+}
+
+.viewSummaryOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.viewSummaryPanel {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 24rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+.viewSummaryTitle {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0a316e;
+  background: #f0f7fc;
+  border-bottom: 1px solid rgba(0, 51, 102, 0.1);
+}
+
+.viewSummaryContent {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.viewSummaryRow {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+.viewSummaryLabel {
+  font-weight: 600;
+  color: #1a1a1a;
+  min-width: 8rem;
+}
+
+.weekSummaryDay {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.4rem 0;
+  border-top: 1px solid rgba(0, 51, 102, 0.08);
+}
+
+.weekSummaryDayLabel {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.weekSummaryDayMeta {
+  font-size: 0.9rem;
+  color: #1a1a1a;
+}
+
+.fullWeekReportPanel {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 28rem;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.fullWeekReportContent {
+  padding: 1rem 1.25rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-height: 0;
+}
+
+.fullWeekReportDay {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 51, 102, 0.15);
+}
+
+.fullWeekReportDay:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.fullWeekReportRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+.fullWeekReportSportLoc {
+  font-weight: 600;
+}
+
+.fullWeekReportMeta {
+  flex-shrink: 0;
+}
+
+.viewSummaryActions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(0, 51, 102, 0.1);
+}
+
+.viewSummarySubmitBtn {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: #0a316e;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.viewSummarySubmitBtn:hover {
+  background: #0d3d85;
+}
+
+.viewSummaryCloseBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #0a316e;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.viewSummaryCloseBtn:hover {
+  background: #e8f4fc;
+}
+
+.dayHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.dayTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.dayContext {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.dayDetailSummary {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.daySummaryText {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.tradersNeededRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tradersNeededLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.tradersNeededInput {
+  width: 4rem;
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+}
+
+.requestTraderRow {
+  margin-top: 0.5rem;
+}
+
+.requestTraderBtn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #0a316e;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.requestTraderBtn:hover:not(:disabled) {
+  background: #e8f4fc;
+}
+
+.requestTraderBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dayRankRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.dayRankLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.dayRankOptions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.dayRankBtn,
+.dayRankBtnActive {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid rgba(0, 51, 102, 0.3);
+  background: #fff;
+  color: var(--text-on-surface);
+}
+
+.dayRankBtn:hover {
+  background: #e8f4fc;
+}
+
+.dayRankBtnActive {
+  background: #0a316e;
+  color: #fff;
+  border-color: #0a316e;
+}
+
+.availabilitySection {
+  margin-bottom: 0.75rem;
+}
+
+.availabilitySectionLabel {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+  margin-bottom: 0.35rem;
+}
+
+.availabilityLists {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.availabilityCol {
+  flex: 1;
+  min-width: 120px;
+}
+
+.availabilityColLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.availabilityList {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-on-surface);
+}
+
+.dayDetailPage {
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.dayDetailContent {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  border: 2px solid rgba(0, 51, 102, 0.4);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.12);
+  padding: clamp(0.75rem, 2vw, 1rem);
+}
+
+.daySummaryField {
+  width: 100%;
+  min-width: 0;
+  padding: clamp(0.5rem, 1.5vw, 0.75rem);
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.daySummaryLine {
+  line-height: 1.4;
+}
+
+.daySummaryLine + .daySummaryLine {
+  margin-top: 0.2rem;
+}
+
+.requirementsToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  padding: clamp(0.65rem, 2vw, 0.75rem) clamp(0.85rem, 2.5vw, 1rem);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+.requirementsToggle:hover {
+  background: #f0f7fc;
+  border-color: rgba(0, 51, 102, 0.35);
+}
+
+.requirementsChevron {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.requirementsPanel {
+  width: 100%;
+  min-width: 0;
+  padding: clamp(0.75rem, 2vw, 1rem);
+  margin-bottom: 0.75rem;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.requirementsRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.requirementsRow:last-child {
+  margin-bottom: 0;
+}
+
+.requirementsLabel {
+  flex: 0 0 auto;
+  min-width: 7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-surface, #1a1a1a);
+}
+
+.requirementsInput {
+  flex: 0 0 auto;
+  width: 4rem;
+  min-width: 3.5rem;
+  padding: 0.4rem 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.requirementsSelect {
+  flex: 1;
+  min-width: 8rem;
+  padding: 0.4rem 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  cursor: pointer;
+}
+
+.requirementsSelect:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.requestTraderEntry {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.requestTraderEntry .requirementsSelect {
+  flex: 1;
+  min-width: 8rem;
+}
+
+.requestTraderAddBtn {
+  flex-shrink: 0;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: #0a316e;
+  border: 1px solid #0a316e;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.requestTraderAddBtn:hover:not(:disabled) {
+  background: #0d3d85;
+}
+
+.requestTraderAddBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.requestedTradersList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.requestedTraderChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  background: rgba(10, 49, 110, 0.1);
+  color: #0a316e;
+  border-radius: var(--radius-sm);
+}
+
+.gamesPanel {
+  width: 100%;
+  min-width: 0;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.gamesPanel .gamesScrollWindow {
+  flex: 1;
+  min-height: 0;
+  margin-top: 0;
+}
+
+.availabilityCard {
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.availabilityCardTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.availabilityCardContent {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-height: 12rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.15rem 0;
+}
+
+.availabilityCard .availabilityCol {
+  flex: 1;
+  min-width: 120px;
+  min-height: 0;
+}
+
+.availabilityCard .availabilityColLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.availabilityCard .availabilityList {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.availabilityCard .availabilityList li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Accordion: location → status → traders (like Availability Report) */
+.availabilityAccordion {
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  overflow: hidden;
+  background: var(--surface, #f8fafc);
+}
+
+.availabilityLocationHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.availabilityLocationHeader:hover {
+  filter: brightness(0.97);
+}
+
+.availabilityLocationTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.availabilityLocationCount {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted, #6b7280);
+}
+
+.availabilityLocationChevron {
+  font-size: 0.7rem;
+  color: var(--text-muted, #6b7280);
+  transition: transform 0.25s ease;
+}
+
+.availabilityLocationChevron[data-open="false"] {
+  transform: rotate(-90deg);
+}
+
+.availabilityStatusGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0.75rem 0.75rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  max-height: 14rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.availabilityStatusBlock {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.availabilityStatusHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #f3f4f6;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.availabilityStatusHeader:hover {
+  filter: brightness(0.97);
+}
+
+.availabilityStatusBlock[data-status="available"] .availabilityStatusHeader {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.availabilityStatusBlock[data-status="preferred_in"] .availabilityStatusHeader {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.availabilityStatusBlock[data-status="no_preference"] .availabilityStatusHeader {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.availabilityStatusBlock[data-status="preferred_off"] .availabilityStatusHeader {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.availabilityStatusBlock[data-status="unavailable"] .availabilityStatusHeader {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.availabilityStatusTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.availabilityStatusChevron {
+  font-size: 0.65rem;
+  opacity: 0.8;
+  transition: transform 0.25s ease;
+}
+
+.availabilityStatusChevron[data-open="false"] {
+  transform: rotate(-90deg);
+}
+
+.availabilityCount {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.availabilityTraderList {
+  margin: 0;
+  padding: 0.2rem 0;
+  list-style: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: #fff;
+}
+
+.availabilityRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.availabilityRow:last-child {
+  border-bottom: none;
+}
+
+.availabilityRowLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.availabilityName {
+  font-weight: 600;
+  color: var(--accent, #0a316e);
+  text-decoration: none;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.availabilityName:hover {
+  text-decoration: underline;
+}
+
+.availabilityAlias {
+  font-size: 0.85rem;
+  color: var(--text-muted, #6b7280);
+  flex-shrink: 0;
+}
+
+.availabilityBadgeRequest,
+.availabilityBadgePreference {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.availabilityBadgeRequest {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.availabilityBadgePreference {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.gamesScrollWindow {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.scrollWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #e8f4fc;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+
+.gameList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gameCard {
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.gameCardOneLine {
+  display: block;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #1a1a1a;
+  background: #fff;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gameCardOneLine:hover {
+  background: #e8f4fc;
+}
+
+.gameCardEventName {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gameCardDetails {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid rgba(0, 51, 102, 0.1);
+}
+
+.gameCardHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.gameSport {
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.gameEvent {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.gameTime {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.gameLocation {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0a6b0a;
+  padding: 0.15rem 0.5rem;
+  background: rgba(10, 107, 10, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.tradersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tradersNeeded {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tradersLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: 0.25rem;
+}
+
+.traderChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  background: rgba(10, 49, 110, 0.1);
+  color: #0a316e;
+  border-radius: var(--radius-sm);
+}
+
+.chipRemove {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0.1rem;
+}
+
+.chipRemove:hover {
+  color: #c00;
+}
+
+.requestBtn {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #0a316e;
+  background: #fff;
+  border: 1px dashed rgba(0, 51, 102, 0.4);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.requestBtn:hover {
+  background: #e8f4fc;
+  border-style: solid;
+}
+
+.availableList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f5f9fc;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 51, 102, 0.15);
+}
+
+.availableLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 100%;
+}
+
+.availableItem {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #0a316e;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.availableItem:hover {
+  background: #e8f4fc;
+}
+
+.traderLoc {
+  font-size: 0.8em;
+  color: var(--text-muted);
+}
+
+.noAvailable {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.cancelRequest {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cancelRequest:hover {
+  color: var(--text);
+}

@@ -1,14 +1,25 @@
 import { Link } from 'react-router-dom'
-import styles from './Placeholder.module.css'
+import layoutStyles from './Home.module.css'
+
+const cards = [
+  { title: 'Coverage', href: '/owners/coverage', icon: '📊' },
+  { title: 'Resources', href: '/owners/resources', icon: '📚' },
+  { title: 'Shift Assignment', href: '/owners/shift-assignment', icon: '📋' },
+]
 
 export default function Owners() {
   return (
-    <main className={styles.page}>
-      <Link to="/" className={styles.back}>
-        ← Home
-      </Link>
-      <h1 className={styles.title}>Owners</h1>
-      <p className={styles.desc}>Owner settings will go here.</p>
+    <main className={layoutStyles.page}>
+      <section className={layoutStyles.cards} aria-label="Owners options">
+        {cards.map((card) => (
+          <Link key={card.href} to={card.href} className={layoutStyles.card}>
+            <h2 className={layoutStyles.cardTitle}>{card.title}</h2>
+            <span className={layoutStyles.cardIcon} aria-hidden>
+              {card.icon}
+            </span>
+          </Link>
+        ))}
+      </section>
     </main>
   )
 }

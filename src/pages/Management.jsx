@@ -4,6 +4,7 @@ import { getTraders } from '../data/traders'
 import layoutStyles from './Home.module.css'
 
 const actions = [
+  { title: 'Shift Requirements', href: '/management/shift-requirements', icon: '📋' },
   { title: 'View Day', href: '/management/view-day', icon: '📅' },
   { title: 'Trader Database', href: '/traders', icon: '👥' },
   { title: 'View Skill Levels', href: '/management/skill-levels', icon: '📊' },

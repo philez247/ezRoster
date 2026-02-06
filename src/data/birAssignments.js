@@ -3,6 +3,8 @@
  * Keyed by game key (sport:gameId) matching birScheduleMaster.
  */
 
+import { getMasterGames } from './birScheduleMaster'
+
 const STORAGE_KEY = 'ez-roster-bir-assignments'
 
 export function gameKey(sport, gameId) {
@@ -82,5 +84,36 @@ export function setAssignment(key, assignment) {
   saveAll(all)
 }
 
-/** Locations available for assignment (matches trader locations). */
-export const ASSIGNMENT_LOCATIONS = ['Dublin', 'Melbourne', 'New Jersey']
+/** Locations available for assignment. Combo = duties shared across multiple locations. */
+export const ASSIGNMENT_LOCATIONS = ['Dublin', 'Melbourne', 'New Jersey', 'Combo']
+
+/**
+ * Seed dummy location assignments for all games in January.
+ * Rotates through Dublin, Melbourne, New Jersey, Combo.
+ * Call from UI (e.g. "Seed January" button) or browser console.
+ * @returns {number} Count of games assigned
+ */
+export function seedAssignmentsForJanuary() {
+  const games = getMasterGames()
+  const janGames = games.filter((g) => {
+    if (!g?.dateUtc) return false
+    const d = new Date(g.dateUtc)
+    if (Number.isNaN(d.getTime())) return false
+    return d.getUTCMonth() === 0 // January
+  })
+  const locations = ASSIGNMENT_LOCATIONS
+  const all = loadAll()
+  let i = 0
+  for (const g of janGames) {
+    const key = gameKey(g.sport, g.gameId)
+    if (!key) continue
+    const existing = all[key] || { location: null, traders: [] }
+    all[key] = {
+      location: locations[i % locations.length],
+      traders: existing.traders || [],
+    }
+    i++
+  }
+  saveAll(all)
+  return janGames.length
+}

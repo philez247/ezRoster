@@ -14,6 +14,7 @@ import Administrators from './pages/Administrators'
 import SkillLevels from './pages/SkillLevels'
 import AvailabilityReport from './pages/AvailabilityReport'
 import DayReport from './pages/DayReport'
+import ManagementShiftRequirements from './pages/ManagementShiftRequirements'
 import ViewDay from './pages/ViewDay'
 import MyProfile from './pages/MyProfile'
 import MasterRoster from './pages/MasterRoster'
@@ -22,6 +23,9 @@ import BIRScheduleMain from './pages/BIRScheduleMain'
 import ESPNScraper from './pages/ESPNScraper'
 import ESPNScraperSport from './pages/ESPNScraperSport'
 import Owners from './pages/Owners'
+import OwnersCoverage from './pages/OwnersCoverage'
+import OwnersResources from './pages/OwnersResources'
+import OwnersShiftAssignment from './pages/OwnersShiftAssignment'
 
 function AppRoutes() {
   const { isAuthenticated } = useAuth()
@@ -33,12 +37,16 @@ function AppRoutes() {
         <Route path="/my-profile" element={<MyProfile />} />
         <Route path="/master-roster" element={<MasterRoster />} />
         <Route path="/owners" element={<Owners />} />
+        <Route path="/owners/coverage" element={<OwnersCoverage />} />
+        <Route path="/owners/resources" element={<OwnersResources />} />
+        <Route path="/owners/shift-assignment" element={<OwnersShiftAssignment />} />
         <Route path="/bir-schedule" element={<BIRSchedule />} />
         <Route path="/bir-schedule/main" element={<BIRScheduleMain />} />
         <Route path="/bir-schedule/espn-scraper" element={<ESPNScraper />} />
         <Route path="/bir-schedule/espn-scraper/:sport" element={<ESPNScraperSport />} />
         <Route path="/traders" element={<TraderDbHome />} />
         <Route path="/management" element={<Management />} />
+        <Route path="/management/shift-requirements" element={<ManagementShiftRequirements />} />
         <Route path="/management/skill-levels" element={<SkillLevels />} />
         <Route path="/management/availability-report" element={<AvailabilityReport />} />
         <Route path="/management/day-report" element={<DayReport />} />

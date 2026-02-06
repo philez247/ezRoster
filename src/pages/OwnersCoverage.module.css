@@ -1,0 +1,598 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.filterRow .filterGroup {
+  flex: 1;
+  min-width: 100px;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.filterSelect {
+  min-height: 40px;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.dateInput,
+.sportSelect {
+  min-height: 40px;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dateInput:focus,
+.sportSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.scrollWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: #e8f4fc;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+
+.gameList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gameRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+
+.gameRow:hover {
+  background: #f8fbfd;
+}
+
+.gameInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.gameCardTopRow {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.gameCardBottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.gameCardMeta {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  flex-shrink: 0;
+  min-width: 10em;
+}
+
+.locationWrap {
+  flex-shrink: 0;
+}
+
+.locationSelect {
+  min-height: 36px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  border-radius: var(--radius-sm);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.locationSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.locationSelectPending {
+  color: #c00;
+  background: rgba(204, 0, 0, 0.12) !important;
+  font-weight: 600;
+}
+
+.locationSelectAssigned {
+  color: #0a6b0a;
+  background: rgba(10, 107, 10, 0.15) !important;
+  font-weight: 600;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Coverage home: year + week cards */
+.yearRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.weekCards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.weekCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.weekCard:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 51, 102, 0.15);
+}
+
+.weekCardCurrent {
+  background: rgba(255, 235, 130, 0.75);
+}
+
+.weekCardTopRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.weekCardTitle {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.weekCardDates {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.weekCardProgress {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.weekCardProgress span {
+  display: block;
+}
+
+.weekCardProgress .completed { color: #0d7a3d; font-weight: 600; }
+.weekCardProgress .archived { color: #5a5a5a; }
+.weekCardProgress .inProgress { color: #b8860b; }
+.weekCardProgress .pending { color: #0a316e; }
+.weekCardProgress .noInfo { color: var(--text-muted); }
+
+/* Week detail: sweep status per sport */
+.sweepSection {
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.sweepSectionTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.sweepList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sweepRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sweepSport {
+  flex: 0 0 5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.sweepSelect {
+  flex: 1;
+  min-height: 36px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.25);
+  border-radius: var(--radius-sm);
+}
+
+.sweepSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Week detail: top row (week # + dates, sport right) */
+.weekDetailTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Read-only field styled like Sport dropdown, not editable */
+.weekDetailWeekField {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.weekDetailSportWrap {
+  flex-shrink: 0;
+  min-width: 120px;
+}
+
+.weekDetailSportWrap .filterSelect {
+  width: 100%;
+}
+
+/* Day detail: top row (info field left, Back right) – same height */
+.dayDetailTopRow {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.dayDetailLeftField {
+  flex: 1;
+  min-width: 0;
+  min-height: 56px;
+  cursor: pointer;
+  padding: 0.5rem 0.6rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.dayDetailLine1,
+.dayDetailLine2 {
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.dayDetailLine1 {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.dayDetailLine2 {
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.dayDetailBackBtn {
+  flex-shrink: 0;
+  width: 80px;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #0a316e;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  align-self: stretch;
+}
+
+.dayDetailBackBtn:hover {
+  background: #e8f4fc;
+}
+
+.dayDetailBackBtn:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.dayDetailScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: #e8f4fc;
+  border: 1px solid rgba(0, 51, 102, 0.2);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+
+/* Week detail: list of day cards (click → day detail) */
+.dayCardList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dayCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: #0a316e;
+  text-align: left;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+}
+
+.dayCard:hover {
+  background: #e8f4fc;
+}
+
+.dayCard:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.accordionDayLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.accordionCount {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.accordionChevron {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Game detail modal */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modalPanel {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0, 51, 102, 0.15);
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.modalClose:hover {
+  color: var(--text);
+}
+
+.modalBody {
+  padding: 1.25rem;
+}
+
+.modalSection {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.modalSection:first-child {
+  margin-top: 0;
+}
+
+.modalRow {
+  margin-bottom: 0.75rem;
+}
+
+.modalRow:last-child {
+  margin-bottom: 0;
+}
+
+.modalLabel {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.modalValue {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--text-on-surface);
+}
