@@ -21,7 +21,7 @@ export default function Login() {
   return (
     <main className={styles.page}>
       <div className={styles.card}>
-        <h1 className={styles.title}>EZ Roster</h1>
+        <h1 className={styles.title}>EZ Roster Prototype</h1>
         <form onSubmit={handleSubmit} className={styles.form}>
           <label htmlFor="login-username" className={styles.label}>
             Username

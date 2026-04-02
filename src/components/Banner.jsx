@@ -35,7 +35,7 @@ function getPageTitle(pathname, search) {
   if (pathname === '/bir-schedule/main') return 'Schedule'
   if (pathname === '/bir-schedule/espn-scraper') return 'ESPN Scraper'
   if (pathname.startsWith('/bir-schedule/espn-scraper/')) return 'ESPN Scraper'
-  return 'EZ Roster'
+  return 'EZ Roster Prototype'
 }
 
 export default function Banner() {

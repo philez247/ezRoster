@@ -122,7 +122,7 @@ def main():
         rightMargin=16 * mm,
         topMargin=14 * mm,
         bottomMargin=14 * mm,
-        title="EZ Roster App Guide",
+        title="EZ Roster Prototype — App Guide",
         author="OpenAI Codex",
     )
     doc.build(build_story(markdown_text))

@@ -1,6 +1,6 @@
-# EZ Roster
+# EZ Roster Prototype
 
-EZ Roster is a single-repo web app for roster planning and sports-schedule ingestion.
+EZ Roster Prototype is a single-repo web app for roster planning and sports-schedule ingestion.
 
 ## Stack
 

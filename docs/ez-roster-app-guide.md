@@ -1,8 +1,8 @@
-# EZ Roster Full Guide
+# EZ Roster Prototype — Full Guide
 
 ## 1. Executive Summary
 
-EZ Roster is a role-based scheduling and staffing application for trader operations across multiple offices and sports.
+EZ Roster Prototype is a role-based scheduling and staffing application for trader operations across multiple offices and sports.
 
 It is designed to answer four linked questions:
 
