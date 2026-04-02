@@ -13,7 +13,6 @@ function todayDateStr() {
   return `${y}-${m}-${day}`
 }
 
-/** Get ET date (YYYY-MM-DD) for a game's dateUtc. */
 function gameDateEt(dateUtc) {
   if (!dateUtc) return ''
   try {
@@ -26,7 +25,7 @@ function gameDateEt(dateUtc) {
 }
 
 function formatTimes(dateUtc) {
-  if (!dateUtc) return { et: '—', dub: '—', melb: '—' }
+  if (!dateUtc) return { et: '-', dub: '-', melb: '-' }
   return {
     et: formatDatePhone(dateUtc, 'America/New_York'),
     dub: formatDatePhone(dateUtc, 'Europe/Dublin'),
@@ -55,35 +54,24 @@ export default function DayReport() {
     return getAvailabilityReport(selectedDay)
   }, [selectedDay])
 
-  const availableTraders = useMemo(() => {
-    return availabilityReport.filter(
-      (r) => r.status === 'available' || r.status === 'preferred_in'
-    )
-  }, [availabilityReport])
+  const availableTraders = useMemo(() => (
+    availabilityReport.filter((r) => r.status === 'available' || r.status === 'preferred_in')
+  ), [availabilityReport])
 
-  const unavailableTraders = useMemo(() => {
-    return availabilityReport.filter((r) => r.status === 'unavailable')
-  }, [availabilityReport])
+  const unavailableTraders = useMemo(() => (
+    availabilityReport.filter((r) => r.status === 'unavailable')
+  ), [availabilityReport])
 
-  const noPreferenceTraders = useMemo(() => {
-    return availabilityReport.filter((r) => r.status === 'no_preference')
-  }, [availabilityReport])
+  const noPreferenceTraders = useMemo(() => (
+    availabilityReport.filter((r) => r.status === 'no_preference')
+  ), [availabilityReport])
 
-  const preferredOffTraders = useMemo(() => {
-    return availabilityReport.filter((r) => r.status === 'preferred_off')
-  }, [availabilityReport])
+  const preferredOffTraders = useMemo(() => (
+    availabilityReport.filter((r) => r.status === 'preferred_off')
+  ), [availabilityReport])
 
   return (
     <main className={styles.page}>
-      <Link to="/management" className={styles.back}>
-        ← Management
-      </Link>
-
-      <h1 className={styles.title}>Games & Availability by Day</h1>
-      <p className={styles.desc}>
-        Select a date to see games on that day (ET) and which traders are available.
-      </p>
-
       <div className={styles.filters}>
         <label htmlFor="day-report-date" className={styles.label}>
           Date
@@ -108,7 +96,7 @@ export default function DayReport() {
                 const key = `${game.sport || ''}:${game.gameId || ''}`
                 return (
                   <li key={key} className={styles.gameCard}>
-                    <span className={styles.sportTag}>{game.sport || '—'}</span>
+                    <span className={styles.sportTag}>{game.sport || '-'}</span>
                     <div className={styles.timesStack}>
                       <span>ET: {times.et}</span>
                       <span>Dublin: {times.dub}</span>
@@ -116,26 +104,22 @@ export default function DayReport() {
                     </div>
                     <div className={styles.eventName}>{eventName(game)}</div>
                     <span className={styles.gameStatus}>
-                      {game.status || game.statusDetail || '—'}
+                      {game.status || game.statusDetail || '-'}
                     </span>
                   </li>
                 )
               })}
             </ul>
           ) : (
-            <p className={styles.empty}>
-              No games on this date. Import from Schedule Scraping sport pages.
-            </p>
+            <p className={styles.empty}>No games.</p>
           )}
         </section>
 
         <section className={styles.section} aria-label="Trader availability">
-          <h2 className={styles.sectionTitle}>Traders Available</h2>
+          <h2 className={styles.sectionTitle}>Availability</h2>
           <div className={styles.availabilityGrid}>
             <div className={styles.availabilityBlock} data-status="available">
-              <h3 className={styles.blockTitle}>
-                In ({availableTraders.length})
-              </h3>
+              <h3 className={styles.blockTitle}>In ({availableTraders.length})</h3>
               <ul className={styles.traderList}>
                 {availableTraders.map((r) => (
                   <li key={r.traderId}>
@@ -143,21 +127,15 @@ export default function DayReport() {
                       {r.name}
                     </Link>
                     {r.alias && <span className={styles.alias}>@{r.alias}</span>}
-                    {r.location && (
-                      <span className={styles.location}>{r.location}</span>
-                    )}
-                    {r.sport && (
-                      <span className={styles.traderSport}>{r.sport}</span>
-                    )}
+                    {r.location && <span className={styles.location}>{r.location}</span>}
+                    {r.sport && <span className={styles.traderSport}>{r.sport}</span>}
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className={styles.availabilityBlock} data-status="unavailable">
-              <h3 className={styles.blockTitle}>
-                Off ({unavailableTraders.length})
-              </h3>
+              <h3 className={styles.blockTitle}>Off ({unavailableTraders.length})</h3>
               <ul className={styles.traderList}>
                 {unavailableTraders.map((r) => (
                   <li key={r.traderId}>
@@ -165,21 +143,15 @@ export default function DayReport() {
                       {r.name}
                     </Link>
                     {r.alias && <span className={styles.alias}>@{r.alias}</span>}
-                    {r.location && (
-                      <span className={styles.location}>{r.location}</span>
-                    )}
-                    {r.source === 'REQUEST' && (
-                      <span className={styles.badge}>Request</span>
-                    )}
+                    {r.location && <span className={styles.location}>{r.location}</span>}
+                    {r.source === 'REQUEST' && <span className={styles.badge}>Request</span>}
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className={styles.availabilityBlock} data-status="no_preference">
-              <h3 className={styles.blockTitle}>
-                No Preference ({noPreferenceTraders.length})
-              </h3>
+              <h3 className={styles.blockTitle}>No Preference ({noPreferenceTraders.length})</h3>
               <ul className={styles.traderList}>
                 {noPreferenceTraders.map((r) => (
                   <li key={r.traderId}>
@@ -187,18 +159,14 @@ export default function DayReport() {
                       {r.name}
                     </Link>
                     {r.alias && <span className={styles.alias}>@{r.alias}</span>}
-                    {r.location && (
-                      <span className={styles.location}>{r.location}</span>
-                    )}
+                    {r.location && <span className={styles.location}>{r.location}</span>}
                   </li>
                 ))}
               </ul>
             </div>
 
             <div className={styles.availabilityBlock} data-status="preferred_off">
-              <h3 className={styles.blockTitle}>
-                Preferred Off ({preferredOffTraders.length})
-              </h3>
+              <h3 className={styles.blockTitle}>Preferred Off ({preferredOffTraders.length})</h3>
               <ul className={styles.traderList}>
                 {preferredOffTraders.map((r) => (
                   <li key={r.traderId}>
@@ -206,9 +174,7 @@ export default function DayReport() {
                       {r.name}
                     </Link>
                     {r.alias && <span className={styles.alias}>@{r.alias}</span>}
-                    {r.location && (
-                      <span className={styles.location}>{r.location}</span>
-                    )}
+                    {r.location && <span className={styles.location}>{r.location}</span>}
                   </li>
                 ))}
               </ul>

@@ -22,7 +22,6 @@ export default function Login() {
     <main className={styles.page}>
       <div className={styles.card}>
         <h1 className={styles.title}>EZ Roster</h1>
-        <p className={styles.subtitle}>Sign in to continue</p>
         <form onSubmit={handleSubmit} className={styles.form}>
           <label htmlFor="login-username" className={styles.label}>
             Username
@@ -58,9 +57,6 @@ export default function Login() {
             Sign in
           </button>
         </form>
-        <p className={styles.hint}>
-          Session lasts 12 hours. Sign in again after expiry.
-        </p>
       </div>
     </main>
   )

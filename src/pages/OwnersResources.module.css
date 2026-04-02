@@ -32,9 +32,28 @@
   margin-bottom: 0.75rem;
 }
 
+.requirementsWeekHeader {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.requirementsFilterGrid {
+  grid-template-columns: 1fr;
+}
+
+.requirementsViewBtnWrap {
+  width: 100%;
+  max-width: none;
+}
+
+.requirementsViewBtnWrap .viewWeekBtn {
+  min-height: 40px;
+}
+
 .filterBar {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: stretch;
   gap: 1rem;
   margin-bottom: 0.75rem;
@@ -43,7 +62,7 @@
 
 .filterGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 0.75rem 1rem;
   align-items: flex-end;
   min-width: 0;
@@ -52,17 +71,17 @@
 
 .viewWeekBtns {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.25rem;
   align-self: stretch;
-  flex-shrink: 1;
+  flex-shrink: 0;
   min-width: 0;
-  max-width: 100%;
+  width: 100%;
 }
 
 .viewWeekBtn {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 0;
+  min-height: 44px;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-weight: 600;
@@ -96,6 +115,7 @@
   width: 100%;
   max-width: 100%;
   align-self: stretch;
+  align-items: stretch;
   overflow: hidden;
 }
 
@@ -190,7 +210,10 @@
 }
 
 .dropdownOption {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   width: 100%;
   padding: 0.5rem 0.6rem;
   font-size: 1rem;
@@ -313,7 +336,7 @@
 /* Day detail */
 .dayDetailTopRow {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   gap: 0.5rem;
   margin-bottom: 1rem;
@@ -325,7 +348,7 @@
 .dayDetailHeaderField {
   min-width: 0;
   flex: 1;
-  padding: 0.5rem 0.75rem;
+  padding: 0.65rem 0.85rem;
   font-size: 1rem;
   font-weight: 600;
   color: #1a1a1a;
@@ -339,24 +362,68 @@
   font-size: 1rem;
   font-weight: 600;
   color: #1a1a1a;
+  min-width: 0;
+  line-height: 1.3;
 }
 
-.dayDetailHeaderRow2 {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #1a1a1a;
+.dayDetailHeaderMeta {
   margin-top: 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b5f78;
+}
+
+.dayDetailHeaderStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.dayDetailControlRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.dayDetailControlSelect,
+.dayDetailControlButton {
+  width: 7rem;
+  flex: 0 0 7rem;
+}
+
+.dayDetailHeaderInlineFilter {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.dayDetailFilterSelect {
+  min-height: 2.3rem;
 }
 
 .dayDetailTopRightBtns {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
   flex-shrink: 0;
+  width: 7rem;
+}
+
+.dayDetailSubRow {
+  width: 100%;
+  margin-top: -0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.dayDetailSubFilter {
+  width: 100%;
 }
 
 .backBtn,
 .viewBtn {
+  min-height: 2.9rem;
   padding: 0.4rem 0.75rem;
   font-size: 0.9rem;
   font-family: inherit;
@@ -704,10 +771,12 @@
   width: 100%;
   max-width: 100%;
   align-self: stretch;
+  align-items: stretch;
   overflow: hidden;
 }
 
 .dayDetailContent {
+  width: 100%;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -1202,7 +1271,10 @@
 }
 
 .gameCardOneLine {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   width: 100%;
   padding: 0.6rem 1rem;
   font-size: 1rem;
@@ -1214,15 +1286,34 @@
   text-align: left;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .gameCardOneLine:hover {
   background: #e8f4fc;
 }
 
+.gameCardSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.gameCardSportCode {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: #0a316e;
+}
+
 .gameCardEventName {
   display: block;
   min-width: 0;
+  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1231,20 +1322,61 @@
 .gameCardDetails {
   padding: 0 1rem 1rem;
   border-top: 1px solid rgba(0, 51, 102, 0.1);
+  background: #f8fbff;
 }
 
 .gameCardHeader {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 1rem;
-  margin-bottom: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-bottom: 0;
   padding-top: 0.75rem;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.gameHeaderMeta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.gameHeaderControl {
+  display: flex;
+  align-items: center;
+  width: 10rem;
+  flex-shrink: 0;
 }
 
 .gameSport {
   font-weight: 700;
   color: #0a316e;
+}
+
+.gameLabel {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #5b6f86;
+}
+
+.gameInfoRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.gameInfoValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #16324f;
 }
 
 .gameEvent {
@@ -1266,6 +1398,25 @@
   padding: 0.15rem 0.5rem;
   background: rgba(10, 107, 10, 0.1);
   border-radius: var(--radius-sm);
+}
+
+.gameStatusAssigned,
+.gameStatusUnassigned {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.gameStatusAssigned {
+  color: #0a6b0a;
+  background: rgba(10, 107, 10, 0.12);
+}
+
+.gameStatusUnassigned {
+  color: #a12626;
+  background: rgba(161, 38, 38, 0.12);
 }
 
 .tradersSection {
@@ -1387,4 +1538,193 @@
 
 .cancelRequest:hover {
   color: var(--text);
+}
+
+.gameAssignmentRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.gameHeaderSelect {
+  min-height: 2.4rem;
+  width: 100%;
+}
+
+.availabilitySummary {
+  padding: 0 0.75rem 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.reportSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 51, 102, 0.12);
+}
+
+.reportRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+}
+
+@media (max-width: 640px) {
+  .dayDetailTopRow {
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .requirementsFilterGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .requirementsViewBtnWrap {
+    flex-basis: 5.4rem;
+    max-width: 5.4rem;
+  }
+
+  .dayDetailHeaderField {
+    padding: 0.55rem 0.7rem;
+  }
+
+  .dayDetailHeaderRow1 {
+    font-size: 0.95rem;
+  }
+
+  .dayDetailHeaderMeta {
+    font-size: 0.88rem;
+  }
+
+  .dayDetailHeaderStack {
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .dayDetailTopRightBtns {
+    width: 5.4rem;
+    gap: 0.4rem;
+  }
+
+  .dayDetailControlRow {
+    gap: 0.4rem;
+  }
+
+  .dayDetailControlSelect,
+  .dayDetailControlButton {
+    width: 5.4rem;
+    flex-basis: 5.4rem;
+  }
+
+  .backBtn,
+  .viewBtn {
+    min-height: 2.7rem;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.88rem;
+  }
+
+  .dayDetailHeaderInlineFilter {
+    width: 100%;
+  }
+
+  .dayDetailFilterSelect {
+    min-height: 2.7rem;
+    font-size: 0.95rem;
+  }
+
+  .dayDetailSubRow {
+    margin-bottom: 0.65rem;
+  }
+
+  .dayDetailContent {
+    padding: 0.55rem;
+    border-width: 1px;
+    border-radius: 14px;
+  }
+
+  .requirementsToggle {
+    margin-bottom: 0.55rem;
+    padding: 0.7rem 0.85rem;
+    border-radius: 14px;
+  }
+
+  .requirementsPanel {
+    padding: 0.55rem;
+    margin-bottom: 0.55rem;
+    border-radius: 14px;
+  }
+
+  .gamesPanel {
+    max-height: none;
+  }
+
+  .gamesScrollWindow {
+    padding: 0.5rem;
+    border-width: 1px;
+  }
+
+  .gameList {
+    gap: 0.5rem;
+  }
+
+  .gameCard {
+    border-radius: 12px;
+  }
+
+  .gameCardOneLine {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .gameCardSportCode {
+    font-size: 0.95rem;
+  }
+
+  .gameStatusAssigned,
+  .gameStatusUnassigned {
+    padding: 0.18rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .gameCardDetails {
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  .gameCardHeader {
+    gap: 0.55rem;
+    padding-top: 0.65rem;
+  }
+
+  .gameHeaderMeta {
+    gap: 0.65rem;
+  }
+
+  .gameInfoValue {
+    font-size: 0.88rem;
+  }
+
+  .gameHeaderControl {
+    width: 8.75rem;
+  }
+
+  .availabilitySummary {
+    padding: 0 0.35rem 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  .dayCard {
+    border-radius: 14px;
+  }
+
+  .dayCardMain {
+    padding: 0.7rem 0.85rem;
+  }
 }

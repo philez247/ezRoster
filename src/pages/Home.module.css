@@ -26,9 +26,7 @@
 }
 
 .subtitle {
-  margin: 0.5rem 0 0;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-  color: var(--text-muted);
+  display: none;
 }
 
 .cards {
@@ -80,9 +78,11 @@ button.card {
 }
 
 .cardIcon {
-  font-size: clamp(1.75rem, 5vw, 2rem);
-  line-height: 1;
-  flex-shrink: 0;
+  display: none;
+}
+
+.cardDesc {
+  display: none;
 }
 
 .cardSummary {
@@ -136,20 +136,6 @@ button.card {
   font-weight: 600;
   color: #0a316e;
   flex-shrink: 0;
-}
-
-/* Desktop: two columns when enough space */
-@media (min-width: 640px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 560px;
-  }
-}
-
-@media (min-width: 900px) {
-  .cards {
-    max-width: 640px;
-  }
 }
 
 /* Modal (e.g. Trader DB Report) */

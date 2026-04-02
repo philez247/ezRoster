@@ -2,16 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import { seedTradersIfEmpty } from './data/traders'
-import { seedDublinTraders } from './data/seedDublinTraders'
-import { seedMelbourneTraders } from './data/seedMelbourneTraders'
-import { seedNewJerseyTraders } from './data/seedNewJerseyTraders'
+import { runDevSeed } from './bootstrap/devSeed'
 import './index.css'
 
-seedTradersIfEmpty()
-seedDublinTraders()
-seedMelbourneTraders()
-seedNewJerseyTraders()
+runDevSeed()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

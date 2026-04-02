@@ -1,0 +1,290 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.select {
+  min-height: 44px;
+  min-width: 0;
+  width: 100%;
+  flex: 1 1 9rem;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  color: var(--text-on-surface);
+  background: var(--surface);
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+}
+
+.select:focus,
+.inlineSelect:focus,
+.shiftType:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+.prompt {
+  margin: 0.6rem 0;
+  color: var(--text-muted);
+}
+
+.dayList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.dayCard {
+  text-align: left;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dayTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.dayMeta {
+  font-size: 0.9rem;
+  color: var(--text-muted-on-surface);
+}
+
+.detailWrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.topRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.backBtn,
+.addBtn,
+.removeBtn {
+  min-height: 38px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--edge-light);
+}
+
+.backBtn,
+.removeBtn {
+  color: var(--text-on-surface);
+  background: var(--surface-solid);
+}
+
+.addBtn {
+  color: #fff;
+  background: var(--accent);
+  border: none;
+}
+
+.daySummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  font-size: 0.92rem;
+  color: var(--text-on-surface);
+}
+
+.columns {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.panelTitle {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
+  color: #0a316e;
+  border-bottom: 1px solid rgba(0, 51, 102, 0.12);
+}
+
+.panelBody {
+  padding: 0.75rem;
+  overflow-y: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.gameCard {
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  border-radius: var(--radius-sm);
+  background: #f8fafc;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.gameHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.sportTag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0a316e;
+  background: rgba(10, 49, 110, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.35rem;
+}
+
+.gameEvent {
+  font-weight: 600;
+  color: var(--text-on-surface);
+}
+
+.gameTime {
+  font-size: 0.85rem;
+  color: var(--text-muted-on-surface);
+}
+
+.assignedRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.assignedLabel {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted-on-surface);
+}
+
+.traderChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.85rem;
+  color: #0a316e;
+  background: rgba(10, 49, 110, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.shiftType {
+  min-height: 30px;
+  font-size: 0.8rem;
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.25rem;
+}
+
+.addRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.inlineSelect {
+  min-height: 38px;
+  min-width: 0;
+  flex: 1 1 9rem;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.availableList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.availableRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid rgba(0, 51, 102, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.traderLink {
+  color: #0a316e;
+  font-weight: 600;
+}
+
+.statusBadge {
+  font-size: 0.75rem;
+  color: #0a316e;
+  background: rgba(10, 49, 110, 0.1);
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+}
+
+.empty {
+  font-size: 0.9rem;
+  color: var(--text-muted-on-surface);
+}
+
+@media (max-width: 640px) {
+  .filters .select {
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+
+  .addRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .inlineSelect,
+  .addBtn {
+    width: 100%;
+  }
+}

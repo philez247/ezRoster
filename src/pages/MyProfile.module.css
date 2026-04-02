@@ -1,0 +1,12 @@
+.cardCopy {
+  flex: 1;
+  min-width: 0;
+}
+
+.summaryCard {
+  cursor: default;
+}
+
+.actionCard {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}

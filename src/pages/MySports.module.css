@@ -1,0 +1,208 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: clamp(1.25rem, 5vw, 2rem);
+  padding-top: max(clamp(1.5rem, 6vw, 2.5rem), var(--safe-top));
+}
+
+.panel,
+.listSection,
+.item {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.panel,
+.listSection {
+  padding: 1rem;
+}
+
+.listSection {
+  margin-top: 1rem;
+}
+
+.scrollWindow {
+  max-height: 24rem;
+  overflow-y: auto;
+  padding-right: 0.15rem;
+}
+
+.scrollWindow::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollWindow::-webkit-scrollbar-thumb {
+  background: rgba(11, 111, 224, 0.28);
+  border-radius: 9999px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.item {
+  padding: 0.9rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.skillCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.skillContent {
+  min-width: 0;
+}
+
+.skillRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.skillLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #5b6b81;
+}
+
+.skillValue {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0a316e;
+  line-height: 1.2;
+}
+
+.skillTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+
+.primaryTag,
+.levelTag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.9rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.primaryTag {
+  color: #7c2d12;
+  background: #ffedd5;
+}
+
+.levelTag {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.editBtn {
+  min-width: 4.5rem;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0b6fe0;
+  background: #e8f2ff;
+  border: 1px solid rgba(11, 111, 224, 0.18);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.editBtn:hover {
+  background: #d9ebff;
+}
+
+.editor {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.select {
+  min-height: 44px;
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.editorActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.addBtn,
+.primaryBtn,
+.secondaryBtn,
+.removeBtn {
+  min-height: 44px;
+  width: 100%;
+  padding: 0.65rem 0.95rem;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.addBtn {
+  color: #fff;
+  background: linear-gradient(180deg, #1f8cff 0%, #0b6fe0 100%);
+  border: none;
+  box-shadow: 0 10px 18px rgba(11, 111, 224, 0.22);
+}
+
+.addBtn:hover,
+.primaryBtn:hover {
+  background: linear-gradient(180deg, #3697ff 0%, #197de8 100%);
+}
+
+.primaryBtn {
+  color: #fff;
+  background: linear-gradient(180deg, #1f8cff 0%, #0b6fe0 100%);
+  border: none;
+}
+
+.secondaryBtn {
+  color: var(--text-on-surface);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+.removeBtn {
+  color: #b91c1c;
+  background: #fff1f2;
+  border: 1px solid rgba(185, 28, 28, 0.14);
+}
+
+.empty {
+  margin: 0;
+  padding: 1rem 0.25rem;
+  color: var(--text-muted);
+}

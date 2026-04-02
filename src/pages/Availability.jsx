@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
+import { ADMIN_USER_ID, DEVELOPER_USER_ID } from '../data/auth'
 import { getTraders } from '../data/traders'
 import {
   getRequestsByTraderId,
@@ -16,20 +18,31 @@ function traderDisplayName(t) {
 }
 
 function formatDateRange(fromDate, toDate) {
-  if (!fromDate) return '—'
+  if (!fromDate) return '-'
   if (!toDate || fromDate === toDate) return fromDate
-  return `${fromDate} – ${toDate}`
+  return `${fromDate} - ${toDate}`
+}
+
+function todayDateStr() {
+  const now = new Date()
+  const y = now.getFullYear()
+  const m = String(now.getMonth() + 1).padStart(2, '0')
+  const d = String(now.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
 }
 
 export default function Availability() {
   const location = useLocation()
-  const [traderId, setTraderId] = useState(location.state?.traderId || '')
+  const { activeTraderId } = useAuth()
+  const isTraderScoped = !!activeTraderId && activeTraderId !== ADMIN_USER_ID && activeTraderId !== DEVELOPER_USER_ID
+  const [traderId, setTraderId] = useState(location.state?.traderId || (isTraderScoped ? activeTraderId : ''))
   const [requests, setRequests] = useState([])
   const [type, setType] = useState('DAY_OFF')
   const [fromDate, setFromDate] = useState('')
   const [toDate, setToDate] = useState('')
   const [note, setNote] = useState('')
   const [adding, setAdding] = useState(false)
+  const [requestFilter, setRequestFilter] = useState('PENDING')
 
   const traders = getTraders()
 
@@ -37,6 +50,12 @@ export default function Availability() {
     const id = location.state?.traderId
     if (id) setTraderId(id)
   }, [location.state?.traderId])
+
+  useEffect(() => {
+    if (isTraderScoped && !location.state?.traderId && !traderId && activeTraderId) {
+      setTraderId(activeTraderId)
+    }
+  }, [activeTraderId, isTraderScoped, location.state?.traderId, traderId])
 
   useEffect(() => {
     if (!traderId) {
@@ -70,35 +89,51 @@ export default function Availability() {
     return styles.badgePending
   }
 
+  const today = todayDateStr()
+  const filteredRequests = requests.filter((request) => {
+    const endDate = (request.toDate || request.fromDate || '').trim()
+    const isPast = !!endDate && endDate < today
+    if (requestFilter === 'PAST') return isPast
+    if (requestFilter === 'PENDING') return !isPast && request.status === 'PENDING'
+    if (requestFilter === 'REVIEWED') return !isPast && request.status !== 'PENDING'
+    return true
+  })
+
+  const emptyMessage =
+    requestFilter === 'PAST'
+      ? 'No past requests.'
+      : requestFilter === 'REVIEWED'
+        ? 'No reviewed requests.'
+        : 'No pending requests.'
+
   return (
     <main className={styles.page}>
-      <Link to="/traders" className={styles.back}>
-        ← Trader Database
-      </Link>
-
       <div className={styles.form}>
-        <label className={styles.label}>Trader</label>
-        <select
-          value={traderId}
-          onChange={(e) => setTraderId(e.target.value)}
-          className={styles.traderSelect}
-          aria-label="Select trader"
-        >
-          <option value="">— Select trader —</option>
-          {traders.map((t) => (
-            <option key={t.traderId} value={t.traderId}>
-              {traderDisplayName(t)}
-            </option>
-          ))}
-        </select>
+        {!isTraderScoped && (
+          <>
+            <label className={styles.label}>Trader</label>
+            <select
+              value={traderId}
+              onChange={(e) => setTraderId(e.target.value)}
+              className={styles.traderSelect}
+              aria-label="Select trader"
+            >
+              <option value="">- Select trader -</option>
+              {traders.map((t) => (
+                <option key={t.traderId} value={t.traderId}>
+                  {traderDisplayName(t)}
+                </option>
+              ))}
+            </select>
+          </>
+        )}
 
         {traderId && (
           <>
             <div className={styles.section}>
-              <h2 className={styles.sectionTitle}>Add request</h2>
               {!adding ? (
                 <button type="button" onClick={() => setAdding(true)} className={styles.addBtn}>
-                  + Add day off / day in request
+                  Add Request
                 </button>
               ) : (
                 <form onSubmit={handleAdd} className={styles.addForm}>
@@ -142,14 +177,23 @@ export default function Availability() {
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
                       className={styles.textInput}
-                      placeholder="Add a note…"
+                      placeholder="Add a note..."
                     />
                   </div>
                   <div className={styles.formActions}>
                     <button type="submit" className={styles.submitBtn}>
-                      Add request
+                      Save
                     </button>
-                    <button type="button" onClick={() => { setAdding(false); setFromDate(''); setToDate(''); setNote(''); }} className={styles.cancelBtn}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAdding(false)
+                        setFromDate('')
+                        setToDate('')
+                        setNote('')
+                      }}
+                      className={styles.cancelBtn}
+                    >
                       Cancel
                     </button>
                   </div>
@@ -158,34 +202,61 @@ export default function Availability() {
             </div>
 
             <div className={styles.section}>
-              <h2 className={styles.sectionTitle}>Requests</h2>
-              {requests.length === 0 ? (
-                <p className={styles.emptyText}>No availability requests yet.</p>
-              ) : (
-                <ul className={styles.requestList}>
-                  {requests.map((r) => (
-                    <li key={r.id} className={styles.requestItem}>
-                      <div className={styles.requestMain}>
-                        <span className={styles.requestType}>{getRequestTypeLabel(r.type)}</span>
-                        <span className={styles.requestDates}>{formatDateRange(r.fromDate, r.toDate)}</span>
-                        <span className={`${styles.badge} ${statusClass(r.status)}`}>
-                          {getRequestStatusLabel(r.status)}
-                        </span>
-                        {r.note && <span className={styles.requestNote}>{r.note}</span>}
-                      </div>
-                      {r.status === 'PENDING' && (
-                        <button
-                          type="button"
-                          onClick={() => handleCancel(r.id)}
-                          className={styles.cancelRequestBtn}
-                        >
-                          Cancel request
-                        </button>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <div className={styles.filterRow}>
+                <button
+                  type="button"
+                  className={styles.filterBtn}
+                  data-active={requestFilter === 'REVIEWED'}
+                  onClick={() => setRequestFilter('REVIEWED')}
+                >
+                  Reviewed
+                </button>
+                <button
+                  type="button"
+                  className={styles.filterBtn}
+                  data-active={requestFilter === 'PENDING'}
+                  onClick={() => setRequestFilter('PENDING')}
+                >
+                  Pending
+                </button>
+                <button
+                  type="button"
+                  className={styles.filterBtn}
+                  data-active={requestFilter === 'PAST'}
+                  onClick={() => setRequestFilter('PAST')}
+                >
+                  Past
+                </button>
+              </div>
+              <div className={styles.requestWindow}>
+                {filteredRequests.length === 0 ? (
+                  <p className={styles.emptyText}>{emptyMessage}</p>
+                ) : (
+                  <ul className={styles.requestList}>
+                    {filteredRequests.map((r) => (
+                      <li key={r.id} className={styles.requestItem}>
+                        <div className={styles.requestMain}>
+                          <span className={styles.requestType}>{getRequestTypeLabel(r.type)}</span>
+                          <span className={styles.requestDates}>{formatDateRange(r.fromDate, r.toDate)}</span>
+                          <span className={`${styles.badge} ${statusClass(r.status)}`}>
+                            {getRequestStatusLabel(r.status)}
+                          </span>
+                          {r.note && <span className={styles.requestNote}>{r.note}</span>}
+                        </div>
+                        {r.status === 'PENDING' && requestFilter !== 'PAST' && (
+                          <button
+                            type="button"
+                            onClick={() => handleCancel(r.id)}
+                            className={styles.cancelRequestBtn}
+                          >
+                            Cancel request
+                          </button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </>
         )}

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useAuth } from '../contexts/AuthContext'
+import { ADMIN_USER_ID, DEVELOPER_USER_ID } from '../data/auth'
 import { getTraders } from '../data/traders'
 import { getConfig } from '../config/store'
 import {
@@ -9,8 +10,9 @@ import {
   saveAllPreferences,
   addPreferenceRange,
   resetAllPreferencesToNoPreference,
-  getPreferenceLabel,
-  getShiftTimingLabel,
+  getPreferenceSummary,
+  normalizeShiftTiming,
+  preferenceNeedsShiftAndSport,
   DAY_LABELS,
   DAY_INDICES,
   PREFERENCE_OPTIONS,
@@ -27,15 +29,44 @@ function hasPreferenceSet(preference) {
 }
 
 function formatRangeLabel(fromDate, toDate) {
-  if (fromDate || toDate) return `From ${fromDate || '—'} to ${toDate || '—'}`
+  if (fromDate || toDate) return `From ${fromDate || '-'} to ${toDate || '-'}`
   return 'No date range set'
 }
 
+function DateField({ id, value, onChange, placeholder, ariaLabel }) {
+  const inputRef = useRef(null)
+
+  const openPicker = () => {
+    const input = inputRef.current
+    if (!input) return
+    if (typeof input.showPicker === 'function') input.showPicker()
+    else input.focus()
+  }
+
+  return (
+    <div className={styles.dateField} onClick={openPicker} role="presentation">
+      <input
+        ref={inputRef}
+        id={id}
+        type="date"
+        value={value}
+        onChange={onChange}
+        className={styles.dateInput}
+        data-empty={!value}
+        aria-label={ariaLabel}
+      />
+      {!value && <span className={styles.datePlaceholder}>{placeholder}</span>}
+    </div>
+  )
+}
+
 export default function Preferences() {
-  const [traderId, setTraderId] = useState('')
+  const { activeTraderId } = useAuth()
+  const isTraderScoped = !!activeTraderId && activeTraderId !== ADMIN_USER_ID && activeTraderId !== DEVELOPER_USER_ID
+  const [traderId, setTraderId] = useState(isTraderScoped ? activeTraderId : '')
   const [config, setConfig] = useState(() => getConfig())
   const [ranges, setRanges] = useState([])
-  const [view, setView] = useState('ranges') // 'ranges' = list of date range cards, 'range-detail' = one range's preferences
+  const [view, setView] = useState('ranges')
   const [selectedRangeId, setSelectedRangeId] = useState(null)
   const [prefs, setPrefs] = useState([])
   const [fromDate, setFromDate] = useState('')
@@ -50,6 +81,10 @@ export default function Preferences() {
   useEffect(() => {
     setConfig(getConfig())
   }, [])
+
+  useEffect(() => {
+    if (isTraderScoped && !traderId && activeTraderId) setTraderId(activeTraderId)
+  }, [activeTraderId, isTraderScoped, traderId])
 
   useEffect(() => {
     if (!traderId) {
@@ -68,7 +103,7 @@ export default function Preferences() {
     setView('ranges')
     setSelectedRangeId(null)
     if (rangeList.length === 0) {
-      setPrefs(DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: 'FULL' })))
+      setPrefs(DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: '' })))
       setFromDate('')
       setToDate('')
     }
@@ -88,13 +123,10 @@ export default function Preferences() {
 
   const updateDay = (dayIndex, updates) => {
     setPrefs((prev) => {
-      const next = [...(prev.length ? prev : DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: 'FULL' })))]
+      const next = [...(prev.length ? prev : DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: '' })))]
       const idx = next.findIndex((p) => p.dayIndex === dayIndex)
-      if (idx >= 0) {
-        next[idx] = { ...next[idx], ...updates }
-      } else {
-        next[dayIndex] = { dayIndex, preference: 'NO_PREFERENCE', sport: '', shiftTiming: 'FULL', ...updates }
-      }
+      if (idx >= 0) next[idx] = { ...next[idx], ...updates }
+      else next[dayIndex] = { dayIndex, preference: 'NO_PREFERENCE', sport: '', shiftTiming: '', ...updates }
       return next
     })
     setSaved(false)
@@ -103,7 +135,7 @@ export default function Preferences() {
   const handleSave = (e) => {
     e.preventDefault()
     if (!traderId || !selectedRangeId) return
-    const list = prefs.length ? prefs : DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: 'FULL' }))
+    const list = prefs.length ? prefs : DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: '' }))
     saveAllPreferences(traderId, list, { fromDate, toDate }, selectedRangeId)
     setRanges(getPreferenceRanges(traderId))
     setPrefs(getPreferencesByTraderId(traderId, selectedRangeId))
@@ -135,56 +167,61 @@ export default function Preferences() {
     if (traderId) {
       const rangeList = getPreferenceRanges(traderId)
       setRanges(rangeList)
-      if (selectedRangeId) {
-        setPrefs(getPreferencesByTraderId(traderId, selectedRangeId))
-      }
+      if (selectedRangeId) setPrefs(getPreferencesByTraderId(traderId, selectedRangeId))
     }
-    setResetMessage('All traders’ preferences set to No Preference.')
+    setResetMessage('All traders preferences set to No Preference.')
     setTimeout(() => setResetMessage(''), 4000)
   }
 
-  const rows = prefs.length ? prefs : DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: 'FULL' }))
-
-  const needsSportAndShift = (preference) => preference === 'ON' || preference === 'PREFERRED_ON'
-
-  const toggleDay = (dayIndex) => {
-    setOpenDayIndex((current) => (current === dayIndex ? null : dayIndex))
-  }
-
+  const rows = prefs.length ? prefs : DAY_INDICES.map((d) => ({ dayIndex: d, preference: 'NO_PREFERENCE', sport: '', shiftTiming: '' }))
+  const toggleDay = (dayIndex) => setOpenDayIndex((current) => (current === dayIndex ? null : dayIndex))
   const selectedRange = ranges.find((r) => r.rangeId === selectedRangeId)
+  const handleCancelEdit = () => {
+    if (traderId && selectedRangeId) {
+      setPrefs(getPreferencesByTraderId(traderId, selectedRangeId))
+      const range = getPreferenceDateRange(traderId, selectedRangeId)
+      setFromDate(range.fromDate || '')
+      setToDate(range.toDate || '')
+    }
+    setSaved(false)
+    setOpenDayIndex(null)
+    setEditMode(false)
+  }
 
   return (
     <main className={styles.page}>
-      <Link to="/traders" className={styles.back}>
-        ← Trader Database
-      </Link>
-
       <form onSubmit={handleSave} className={styles.form}>
-        <label className={styles.label}>Trader</label>
-        <select
-          value={traderId}
-          onChange={(e) => setTraderId(e.target.value)}
-          className={styles.traderSelect}
-          aria-label="Select trader"
-        >
-          <option value="">— Select trader —</option>
-          {traders.map((t) => (
-            <option key={t.traderId} value={t.traderId}>
-              {traderDisplayName(t)}
-            </option>
-          ))}
-        </select>
+        {!isTraderScoped && (
+          <>
+            <label className={styles.label}>Trader</label>
+            <select
+              value={traderId}
+              onChange={(e) => setTraderId(e.target.value)}
+              className={styles.traderSelect}
+              aria-label="Select trader"
+            >
+              <option value="">- Select trader -</option>
+              {traders.map((t) => (
+                <option key={t.traderId} value={t.traderId}>
+                  {traderDisplayName(t)}
+                </option>
+              ))}
+            </select>
+          </>
+        )}
 
-        <div className={styles.resetAllRow}>
-          <button
-            type="button"
-            onClick={handleResetAllToNoPreference}
-            className={styles.resetAllBtn}
-          >
-            Reset all traders’ preferences to No Preference
-          </button>
-          {resetMessage && <span className={styles.resetMessage}>{resetMessage}</span>}
-        </div>
+        {!isTraderScoped && (
+          <div className={styles.resetAllRow}>
+            <button
+              type="button"
+              onClick={handleResetAllToNoPreference}
+              className={styles.resetAllBtn}
+            >
+              Reset all traders preferences to No Preference
+            </button>
+            {resetMessage && <span className={styles.resetMessage}>{resetMessage}</span>}
+          </div>
+        )}
 
         {traderId && (
           <>
@@ -209,7 +246,7 @@ export default function Preferences() {
                           aria-label={`View preferences for ${formatRangeLabel(r.fromDate, r.toDate)}`}
                         >
                           <span className={styles.rangeCardLabel}>{formatRangeLabel(r.fromDate, r.toDate)}</span>
-                          <span className={styles.rangeCardChevron} aria-hidden>→</span>
+                          <span className={styles.rangeCardChevron} aria-hidden>{'>'}</span>
                         </button>
                       </li>
                     ))}
@@ -223,13 +260,6 @@ export default function Preferences() {
               </div>
             ) : view === 'range-detail' && !editMode ? (
               <>
-                <button
-                  type="button"
-                  onClick={() => setView('ranges')}
-                  className={styles.backToRanges}
-                >
-                  ← Date ranges
-                </button>
                 <div className={styles.viewSummary} aria-label="Preferences summary">
                   <div className={styles.viewDateRangeField}>
                     <span className={styles.viewDateRangeLabel}>Date range</span>
@@ -241,20 +271,10 @@ export default function Preferences() {
                   <ul className={styles.viewDayList}>
                     {rows.map((row, i) => {
                       const dayIndex = row.dayIndex ?? i
-                      const pref = row.preference || 'NO_PREFERENCE'
-                      const label = getPreferenceLabel(pref)
-                      const isNoPref = pref === 'NO_PREFERENCE' || !pref
-                      const detail = isNoPref
-                        ? null
-                        : (pref === 'ON' || pref === 'PREFERRED_ON') && row.sport
-                          ? `${row.sport} · ${getShiftTimingLabel(row.shiftTiming)}`
-                          : getShiftTimingLabel(row.shiftTiming)
                       return (
                         <li key={dayIndex} className={styles.viewDayRow}>
                           <span className={styles.viewDayName}>{DAY_LABELS[dayIndex]}</span>
-                          <span className={styles.viewDayDetail}>
-                            {isNoPref ? label : `${label} – ${detail}`}
-                          </span>
+                          <span className={styles.viewDayDetail}>{getPreferenceSummary(row)}</span>
                         </li>
                       )
                     })}
@@ -266,40 +286,29 @@ export default function Preferences() {
               </>
             ) : view === 'range-detail' && editMode ? (
               <>
-                <button
-                  type="button"
-                  onClick={() => setView('ranges')}
-                  className={styles.backToRanges}
-                >
-                  ← Date ranges
-                </button>
                 <div className={styles.dateRow}>
                   <div className={styles.field}>
-                    <label className={styles.fieldLabel} htmlFor="pref-from">From</label>
-                    <input
+                    <DateField
                       id="pref-from"
-                      type="date"
                       value={fromDate}
                       onChange={(e) => {
                         setFromDate(e.target.value)
                         setSaved(false)
                       }}
-                      className={styles.dateInput}
-                      aria-label="Valid from date"
+                      placeholder="From"
+                      ariaLabel="Valid from date"
                     />
                   </div>
                   <div className={styles.field}>
-                    <label className={styles.fieldLabel} htmlFor="pref-to">To</label>
-                    <input
+                    <DateField
                       id="pref-to"
-                      type="date"
                       value={toDate}
                       onChange={(e) => {
                         setToDate(e.target.value)
                         setSaved(false)
                       }}
-                      className={styles.dateInput}
-                      aria-label="Valid to date"
+                      placeholder="To"
+                      ariaLabel="Valid to date"
                     />
                   </div>
                 </div>
@@ -329,6 +338,7 @@ export default function Preferences() {
                     const preference = row.preference || 'NO_PREFERENCE'
                     const hasPreference = hasPreferenceSet(preference)
                     const isOpen = openDayIndex === dayIndex
+                    const needsDetails = preferenceNeedsShiftAndSport(preference)
                     return (
                       <li key={dayIndex} className={styles.cardItem}>
                         <div className={styles.card}>
@@ -344,7 +354,7 @@ export default function Preferences() {
                             <span className={hasPreference ? styles.badgePreference : styles.badgeNoPreference}>
                               {hasPreference ? 'Preference' : 'No Preference'}
                             </span>
-                            <span className={styles.cardChevron} aria-hidden data-open={isOpen}>▼</span>
+                            <span className={styles.cardChevron} aria-hidden data-open={isOpen}>v</span>
                           </button>
                           <div
                             id={`pref-panel-${dayIndex}`}
@@ -356,13 +366,15 @@ export default function Preferences() {
                           >
                             <div className={styles.cardBody}>
                               <div className={styles.field}>
-                                <label className={styles.fieldLabel}>Preference</label>
                                 <select
                                   value={preference}
                                   onChange={(e) =>
                                     updateDay(dayIndex, {
                                       preference: e.target.value,
-                                      sport: needsSportAndShift(e.target.value) ? row.sport : '',
+                                      sport: preferenceNeedsShiftAndSport(e.target.value) ? row.sport : '',
+                                      shiftTiming: preferenceNeedsShiftAndSport(e.target.value)
+                                        ? normalizeShiftTiming(row.shiftTiming)
+                                        : '',
                                     })
                                   }
                                   className={styles.select}
@@ -373,32 +385,31 @@ export default function Preferences() {
                                   ))}
                                 </select>
                               </div>
-                              {needsSportAndShift(preference) && (
-                                <div className={styles.field}>
-                                  <label className={styles.fieldLabel}>Sport</label>
-                                  <select
-                                    value={row.sport || ''}
-                                    onChange={(e) => updateDay(dayIndex, { sport: e.target.value })}
-                                    className={styles.select}
-                                    aria-label={`${dayLabel} sport`}
-                                  >
-                                    <option value="">— Sport —</option>
-                                    {config.sports.map((s) => (
-                                      <option key={s} value={s}>{s}</option>
-                                    ))}
-                                  </select>
-                                </div>
-                              )}
                               <div className={styles.field}>
-                                <label className={styles.fieldLabel}>Shift</label>
                                 <select
-                                  value={row.shiftTiming || 'FULL'}
+                                  value={needsDetails ? normalizeShiftTiming(row.shiftTiming) : ''}
                                   onChange={(e) => updateDay(dayIndex, { shiftTiming: e.target.value })}
                                   className={styles.select}
                                   aria-label={`${dayLabel} shift`}
+                                  disabled={!needsDetails}
                                 >
+                                  <option value="">Shift</option>
                                   {SHIFT_TIMING_OPTIONS.map((opt) => (
                                     <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                  ))}
+                                </select>
+                              </div>
+                              <div className={styles.field}>
+                                <select
+                                  value={needsDetails ? (row.sport || '') : ''}
+                                  onChange={(e) => updateDay(dayIndex, { sport: e.target.value })}
+                                  className={styles.select}
+                                  aria-label={`${dayLabel} sport`}
+                                  disabled={!needsDetails}
+                                >
+                                  <option value="">Sport</option>
+                                  {config.sports.map((s) => (
+                                    <option key={s} value={s}>{s}</option>
                                   ))}
                                 </select>
                               </div>
@@ -412,10 +423,10 @@ export default function Preferences() {
 
                 <div className={styles.actions}>
                   <button type="submit" className={styles.saveBtn}>
-                    Save preferences
+                    Save
                   </button>
-                  <button type="button" onClick={() => setEditMode(false)} className={styles.donePrefBtn}>
-                    Done
+                  <button type="button" onClick={handleCancelEdit} className={styles.donePrefBtn}>
+                    Cancel
                   </button>
                   {saved && <span className={styles.saved}>Saved.</span>}
                 </div>

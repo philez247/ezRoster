@@ -47,6 +47,7 @@ const ESPN_SCOREBOARDS = {
 }
 
 const CFB_TEAMS_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams'
+const CFB_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard'
 const NCAAM_TEAMS_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams'
 const NCAAM_SCOREBOARD_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard'
 const WNBA_TEAMS_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/teams'
@@ -116,6 +117,21 @@ app.get('/api/espn/cfb/teams', async (req, res) => {
   } catch (err) {
     console.error('[ESPN CFB teams proxy]', err.message)
     res.status(502).json({ error: err.message || 'Failed to fetch CFB teams' })
+  }
+})
+
+app.get('/api/espn/cfb/scoreboard', async (req, res) => {
+  try {
+    const date = (req.query.date || '').trim()
+    if (!/^\d{8}$/.test(date)) {
+      return res.status(400).json({ error: 'Invalid date. Use YYYYMMDD.' })
+    }
+    const url = `${CFB_SCOREBOARD_URL}?dates=${date}`
+    const data = await fetchWithRetry(url)
+    res.json(data)
+  } catch (err) {
+    console.error('[ESPN CFB scoreboard proxy]', err.message)
+    res.status(502).json({ error: err.message || 'Failed to fetch CFB scoreboard' })
   }
 })
 

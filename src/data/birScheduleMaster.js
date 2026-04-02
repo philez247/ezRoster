@@ -4,6 +4,7 @@
  */
 
 const STORAGE_KEY = 'ez-roster-bir-schedule-master'
+const CHANGES_STORAGE_KEY = 'ez-roster-bir-schedule-master-changes'
 
 const SPORT_STORAGE_KEYS = [
   { key: 'ez-roster-nba-scoreboard', sport: 'NBA', lastKey: 'nba' },
@@ -11,6 +12,7 @@ const SPORT_STORAGE_KEYS = [
   { key: 'ez-roster-nhl-scoreboard', sport: 'NHL', lastKey: 'nhl' },
   { key: 'ez-roster-wnba-scoreboard', sport: 'WNBA', lastKey: 'wnba' },
   { key: 'ez-roster-mlb-scoreboard', sport: 'MLB', lastKey: 'mlb' },
+  { key: 'ez-roster-cfb-scoreboard', sport: 'CFB', lastKey: 'cfb' },
   { key: 'ez-roster-ncaam-scoreboard', sport: 'NCAAM', lastKey: 'ncaam' },
 ]
 
@@ -51,6 +53,77 @@ function migrateFromSportStorage() {
 /** Build composite key for a game (sport + gameId). */
 function gameKey(sport, gameId) {
   return `${(sport || '').toUpperCase()}:${gameId || ''}`
+}
+
+function gameLabel(game) {
+  const away = game?.awayTeam?.name || 'Away'
+  const home = game?.homeTeam?.name || 'Home'
+  return `${away} @ ${home}`
+}
+
+function snapshotGame(game) {
+  return {
+    sport: (game?.sport || '').toUpperCase(),
+    gameId: game?.gameId || '',
+    dateUtc: game?.dateUtc || '',
+    status: game?.status || '',
+    statusDetail: game?.statusDetail || '',
+    homeTeam: {
+      name: game?.homeTeam?.name || '',
+      score: game?.homeTeam?.score ?? null,
+    },
+    awayTeam: {
+      name: game?.awayTeam?.name || '',
+      score: game?.awayTeam?.score ?? null,
+    },
+    venue: {
+      name: game?.venue?.name ?? game?.venue?.fullName ?? '',
+      city: game?.venue?.city || '',
+      state: game?.venue?.state || '',
+    },
+  }
+}
+
+function loadMasterChanges() {
+  try {
+    const raw = localStorage.getItem(CHANGES_STORAGE_KEY)
+    if (!raw) return []
+    const data = JSON.parse(raw)
+    return Array.isArray(data) ? data : []
+  } catch {
+    return []
+  }
+}
+
+function saveMasterChanges(changes) {
+  try {
+    localStorage.setItem(CHANGES_STORAGE_KEY, JSON.stringify(changes))
+  } catch (e) {
+    console.warn('Failed to save BIR schedule changes:', e)
+  }
+}
+
+function appendMasterChanges(entries, maxEntries = 1000) {
+  if (!entries?.length) return
+  const existing = loadMasterChanges()
+  const merged = [...entries, ...existing]
+  saveMasterChanges(merged.slice(0, maxEntries))
+}
+
+function buildChangedFields(existing, incoming) {
+  const fields = []
+  if ((existing.dateUtc || '') !== (incoming.dateUtc || '')) fields.push('dateUtc')
+  if ((existing.status || '') !== (incoming.status || '')) fields.push('status')
+  if ((existing.statusDetail || '') !== (incoming.statusDetail || '')) fields.push('statusDetail')
+  const eHome = existing.homeTeam?.score
+  const eAway = existing.awayTeam?.score
+  const iHome = incoming.homeTeam?.score
+  const iAway = incoming.awayTeam?.score
+  if (eHome !== iHome || eAway !== iAway) fields.push('score')
+  const eVenue = existing.venue?.name ?? existing.venue?.fullName ?? ''
+  const iVenue = incoming.venue?.name ?? incoming.venue?.fullName ?? ''
+  if (eVenue !== iVenue) fields.push('venue')
+  return fields
 }
 
 /** Check if two games have different details (status, time, date, venue, scores, etc.). */
@@ -247,6 +320,21 @@ export function compareWithMasterDetailed(newGames, sport) {
 }
 
 /**
+ * Get persisted master change history, newest first.
+ * @param {{ sport?: string, limit?: number }} [opts]
+ * @returns {Array}
+ */
+export function getMasterChangeHistory(opts = {}) {
+  const list = loadMasterChanges()
+  const sportFilter = (opts?.sport || '').trim().toUpperCase()
+  const limit = Number.isFinite(opts?.limit) ? Math.max(1, opts.limit) : null
+  let out = list
+  if (sportFilter) out = out.filter((c) => (c.sport || '').toUpperCase() === sportFilter)
+  if (limit) out = out.slice(0, limit)
+  return out
+}
+
+/**
  * Merge new games into master. Never removes games.
  * Adds new games, updates existing if details changed.
  * @param {Game[]} newGames - Games from ESPN (each must have sport added)
@@ -267,6 +355,7 @@ export function mergeGamesIntoMaster(newGames, sport, fetchedAtIso) {
 
   let added = 0
   let updated = 0
+  const mergeChanges = []
 
   const sportUpper = (sport || '').toUpperCase()
   for (const g of newGames) {
@@ -278,9 +367,35 @@ export function mergeGamesIntoMaster(newGames, sport, fetchedAtIso) {
     if (!existing) {
       byKey.set(k, game)
       added++
+      mergeChanges.push({
+        id: `chg-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+        detectedAt: fetchedAtIso || new Date().toISOString(),
+        type: 'NEW_GAME',
+        sport: game.sport || sportUpper,
+        gameId: game.gameId || '',
+        event: gameLabel(game),
+        changedFields: ['new'],
+        diffs: ['New game added to master'],
+        before: null,
+        after: snapshotGame(game),
+      })
     } else if (gameDetailsChanged(existing, game)) {
+      const diffs = getChangeDiffs(existing, game)
+      const changedFields = buildChangedFields(existing, game)
       byKey.set(k, game)
       updated++
+      mergeChanges.push({
+        id: `chg-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+        detectedAt: fetchedAtIso || new Date().toISOString(),
+        type: 'GAME_UPDATED',
+        sport: game.sport || sportUpper,
+        gameId: game.gameId || '',
+        event: gameLabel(game),
+        changedFields,
+        diffs,
+        before: snapshotGame(existing),
+        after: snapshotGame(game),
+      })
     }
   }
 
@@ -298,6 +413,8 @@ export function mergeGamesIntoMaster(newGames, sport, fetchedAtIso) {
   } catch (e) {
     console.warn('Failed to save BIR schedule master:', e)
   }
+
+  appendMasterChanges(mergeChanges)
 
   return { added, updated }
 }

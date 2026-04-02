@@ -1,0 +1,322 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.landingStack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 4vw, 1.5rem);
+  width: 100%;
+  max-width: 420px;
+}
+
+.section {
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 0;
+}
+
+.headerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.headerLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.42rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0a316e;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.15);
+  border-radius: var(--radius-sm);
+}
+
+.headerLink:hover {
+  background: #eef4fb;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0a316e;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted-on-surface);
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.summaryHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.summaryStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.summaryMetricGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.metricCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: #f8fafc;
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+}
+
+.metricLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted-on-surface);
+}
+
+.metricValue {
+  font-size: 1.7rem;
+  line-height: 1;
+  color: #0a316e;
+}
+
+.summaryPanel {
+  background: #f8fafc;
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+}
+
+.summaryPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.summaryHint {
+  font-size: 0.78rem;
+  color: var(--text-muted-on-surface);
+  text-align: right;
+}
+
+.summaryCard {
+  background: #f8fafc;
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+}
+
+.summaryTitle {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+  color: #0a316e;
+}
+
+.summaryValue {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0a316e;
+}
+
+.summaryList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+}
+
+.summaryList li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.input,
+.select {
+  min-height: 40px;
+  padding: 0.42rem 0.6rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--edge-light);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.totalsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  font-size: 0.86rem;
+  color: var(--text-on-surface);
+}
+
+.cardWindow {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  border-radius: var(--radius-sm);
+  background: #f8fafc;
+  padding: 0.75rem;
+}
+
+.cardList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.traderCard {
+  display: flex;
+  background: #fff;
+  border: 1px solid rgba(0, 51, 102, 0.12);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.traderCard:hover {
+  background: #eef4fb;
+}
+
+.cardMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #0a316e;
+  min-width: 0;
+}
+
+.cardLevel {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0a316e;
+  background: rgba(10, 49, 110, 0.1);
+  border-radius: 999px;
+  padding: 0.18rem 0.45rem;
+}
+
+.cardMetaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  color: var(--text-on-surface);
+}
+
+.cardSkills {
+  font-size: 0.82rem;
+  color: var(--text-muted-on-surface);
+}
+
+.emptyState {
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--text-muted-on-surface);
+}
+
+@media (max-width: 1024px) {
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filters > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 0.7rem;
+  }
+
+  .summaryHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .summaryMetricGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .summaryPanelHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summaryHint {
+    text-align: left;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardList {
+    grid-template-columns: 1fr;
+  }
+}

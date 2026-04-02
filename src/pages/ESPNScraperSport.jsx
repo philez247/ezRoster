@@ -19,6 +19,7 @@ const SPORT_LABELS = {
   cbb: 'CBB',
   wnba: 'WNBA',
   all: 'All Sports',
+  'all-sports': 'All Sports',
 }
 
 export default function ESPNScraperSport() {
@@ -31,13 +32,13 @@ export default function ESPNScraperSport() {
   if (sport === 'mlb') return <MlbScraperPage />
   if (sport === 'cfb') return <CfbScraperPage />
   if (sport === 'cbb') return <NcaamScraperPage />
-  if (sport === 'all') return <AllSportsScraperPage />
+  if (sport === 'all' || sport === 'all-sports') return <AllSportsScraperPage />
 
   const label = SPORT_LABELS[sport] || sport || 'Sport'
   return (
     <main className={layoutStyles.page}>
       <Link to="/bir-schedule/espn-scraper" className={styles.back}>
-        ← ESPN Scraper
+        {'<-'} ESPN Scraper
       </Link>
       <h1 className={styles.title}>{label}</h1>
       <p className={styles.desc}>Schedule Scraping content for {label} will go here.</p>

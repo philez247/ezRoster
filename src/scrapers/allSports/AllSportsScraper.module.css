@@ -60,6 +60,45 @@
   margin-bottom: 0;
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.actions .syncBtn {
+  flex: 1 1 220px;
+}
+
+.actions .moreOptionsBtn {
+  flex: 1 1 140px;
+}
+
+.status {
+  margin: 0.6rem 0 0;
+  font-size: 0.9rem;
+  color: #0a316e;
+}
+
+.runReport {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 51, 102, 0.15);
+}
+
+.lastSync {
+  margin: 0.2rem 0;
+  font-size: 0.85rem;
+  color: var(--text-muted-on-surface);
+}
+
+.runReportList {
+  margin: 0.35rem 0 0;
+  padding-left: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-on-surface);
+}
+
 .filterGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -1,10 +1,14 @@
 /**
  * Simple app auth: username/password, session stored in localStorage with 12h expiry.
- * Credentials are only checked on login; session contains username + expiresAt.
+ * Credentials are only checked on login; session contains username + expiresAt + activeTraderId.
  */
+
+import { loadTraderDb } from './traderDb'
 
 const SESSION_KEY = 'ez-roster-session'
 const SESSION_HOURS = 12
+export const ADMIN_USER_ID = '__ADMIN__'
+export const DEVELOPER_USER_ID = '__DEVELOPER__'
 
 const CREDENTIALS = {
   username: 'philEz',
@@ -27,6 +31,25 @@ function getSession() {
   }
 }
 
+function saveSession(session) {
+  try {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+    return true
+  } catch {
+    return false
+  }
+}
+
+function isValidTraderSelection(traderId) {
+  if (!traderId || traderId === DEVELOPER_USER_ID || traderId === ADMIN_USER_ID) return true
+  try {
+    const db = loadTraderDb()
+    return !!db?.traders?.[traderId]
+  } catch {
+    return false
+  }
+}
+
 /** Returns true if user has a valid (non-expired) session. */
 export function isAuthenticated() {
   return getSession() !== null
@@ -43,15 +66,7 @@ export function login(username, password) {
     return false
   }
   const expiresAt = Date.now() + SESSION_HOURS * 60 * 60 * 1000
-  try {
-    localStorage.setItem(
-      SESSION_KEY,
-      JSON.stringify({ username: u, expiresAt })
-    )
-    return true
-  } catch {
-    return false
-  }
+  return saveSession({ username: u, expiresAt, activeTraderId: DEVELOPER_USER_ID })
 }
 
 /** Clear session (sign out). */
@@ -67,4 +82,28 @@ export function logout() {
 export function getUsername() {
   const s = getSession()
   return s ? s.username : null
+}
+
+/** Get currently selected trader if authenticated. */
+export function getActiveTraderId() {
+  const s = getSession()
+  const activeTraderId = s?.activeTraderId || DEVELOPER_USER_ID
+  if (!s) return DEVELOPER_USER_ID
+  if (isValidTraderSelection(activeTraderId)) return activeTraderId
+
+  saveSession({
+    ...s,
+    activeTraderId: DEVELOPER_USER_ID,
+  })
+  return DEVELOPER_USER_ID
+}
+
+/** Update currently selected trader in the active session. */
+export function setActiveTraderId(traderId) {
+  const s = getSession()
+  if (!s) return false
+  return saveSession({
+    ...s,
+    activeTraderId: traderId || DEVELOPER_USER_ID,
+  })
 }

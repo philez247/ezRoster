@@ -1,14 +1,17 @@
-const STORAGE_KEY = 'ez-roster-trader-skills'
+import {
+  SKILL_LEVELS as LEVELS,
+  SKILL_TYPES as TYPES,
+} from '../domain/constants/preAllocation'
+import { normalizeTraderSkill } from '../domain/traders/model'
 
-const TYPES = ['primary', 'secondary']
-const LEVELS = [1, 2, 3]
+const STORAGE_KEY = 'ez-roster-trader-skills'
 
 function getRaw() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return []
     const data = JSON.parse(raw)
-    return Array.isArray(data) ? data : []
+    return Array.isArray(data) ? data.map(normalizeTraderSkill) : []
   } catch {
     return []
   }
@@ -16,7 +19,7 @@ function getRaw() {
 
 function save(list) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify((list || []).map(normalizeTraderSkill)))
   } catch (e) {
     console.warn('Failed to save trader skills:', e)
   }
@@ -41,13 +44,13 @@ export function getSkillsByTraderId(traderId) {
 /** Add a skill assignment. */
 export function addSkill(traderId, sport, type, level) {
   const list = getRaw()
-  list.push({
+  list.push(normalizeTraderSkill({
     id: generateId(),
     traderId,
-    sport: (sport || '').trim(),
-    type: type === 'secondary' ? 'secondary' : 'primary',
-    level: level === 2 ? 2 : level === 3 ? 3 : 1,
-  })
+    sport,
+    type,
+    level,
+  }))
   save(list)
   return getSkillsByTraderId(traderId)
 }
@@ -57,12 +60,7 @@ export function updateSkill(id, updates) {
   const list = getRaw()
   const idx = list.findIndex((s) => s.id === id)
   if (idx === -1) return list
-  list[idx] = { ...list[idx], ...updates }
-  if (updates.sport !== undefined) list[idx].sport = (list[idx].sport || '').trim()
-  if (updates.type !== undefined)
-    list[idx].type = updates.type === 'secondary' ? 'secondary' : 'primary'
-  if (updates.level !== undefined)
-    list[idx].level = updates.level === 2 ? 2 : updates.level === 3 ? 3 : 1
+  list[idx] = normalizeTraderSkill({ ...list[idx], ...updates })
   save(list)
   return list
 }
@@ -77,6 +75,11 @@ export function removeSkill(id) {
 /** Get all skills (for grouping traders by sport/capability later). */
 export function getAllSkills() {
   return getRaw()
+}
+
+export function replaceAllSkills(skills) {
+  save(Array.isArray(skills) ? skills.map(normalizeTraderSkill) : [])
+  return getAllSkills()
 }
 
 export { TYPES, LEVELS }

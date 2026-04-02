@@ -74,9 +74,7 @@
 }
 
 .cardIcon {
-  font-size: clamp(1.75rem, 5vw, 2rem);
-  line-height: 1;
-  flex-shrink: 0;
+  display: none;
 }
 
 /* CFB football & CBB basketball – blue */
@@ -89,16 +87,3 @@
   filter: sepia(1) saturate(3) hue-rotate(300deg);
 }
 
-/* Desktop: two columns when enough space */
-@media (min-width: 640px) {
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 560px;
-  }
-}
-
-@media (min-width: 900px) {
-  .cards {
-    max-width: 640px;
-  }
-}

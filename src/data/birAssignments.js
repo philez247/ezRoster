@@ -4,6 +4,11 @@
  */
 
 import { getMasterGames } from './birScheduleMaster'
+import { invalidateApprovedWeekByDate } from './allocationInvalidation'
+import {
+  ASSIGNMENT_LOCATIONS,
+} from '../domain/constants/preAllocation'
+import { getEtDateKey } from '../domain/calendar'
 
 const STORAGE_KEY = 'ez-roster-bir-assignments'
 
@@ -30,6 +35,10 @@ function saveAll(assignments) {
   }
 }
 
+export function getAllAssignments() {
+  return loadAll()
+}
+
 /**
  * Get assignment for a game.
  * @param {string} key - gameKey(sport, gameId)
@@ -53,8 +62,13 @@ export function getAssignment(key) {
 export function setLocation(key, location) {
   const all = loadAll()
   const existing = all[key] || { location: null, traders: [] }
+  const game = getMasterGames().find((entry) => gameKey(entry.sport, entry.gameId) === key)
+  const dateStr = getEtDateKey(game?.dateUtc)
+  const previousLocation = existing.location || null
   all[key] = { ...existing, location: location || null }
   saveAll(all)
+  invalidateApprovedWeekByDate(previousLocation, dateStr)
+  invalidateApprovedWeekByDate(location || null, dateStr)
 }
 
 /**
@@ -77,15 +91,17 @@ export function setTraders(key, traders) {
 export function setAssignment(key, assignment) {
   const all = loadAll()
   const existing = all[key] || { location: null, traders: [] }
+  const game = getMasterGames().find((entry) => gameKey(entry.sport, entry.gameId) === key)
+  const dateStr = getEtDateKey(game?.dateUtc)
+  const previousLocation = existing.location || null
   all[key] = {
     location: assignment.location !== undefined ? (assignment.location || null) : existing.location,
     traders: assignment.traders !== undefined ? (assignment.traders || []) : existing.traders,
   }
   saveAll(all)
+  invalidateApprovedWeekByDate(previousLocation, dateStr)
+  invalidateApprovedWeekByDate(all[key].location || null, dateStr)
 }
-
-/** Locations available for assignment. Combo = duties shared across multiple locations. */
-export const ASSIGNMENT_LOCATIONS = ['Dublin', 'Melbourne', 'New Jersey', 'Combo']
 
 /**
  * Seed dummy location assignments for all games in January.
@@ -117,3 +133,5 @@ export function seedAssignmentsForJanuary() {
   saveAll(all)
   return janGames.length
 }
+
+export { ASSIGNMENT_LOCATIONS }

@@ -6,6 +6,9 @@
   overflow: hidden;
   padding: clamp(0.75rem, 3vw, 1.25rem);
   padding-top: max(clamp(0.75rem, 3vw, 1.25rem), var(--safe-top));
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
 }
 
 .back {

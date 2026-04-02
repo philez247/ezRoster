@@ -1,44 +1,76 @@
 # EZ Roster
 
-A roster system for managing a database of Traders. Built for phone and desktop, with future AWS deployment in mind.
+EZ Roster is a single-repo web app for roster planning and sports-schedule ingestion.
 
-## Local development
+## Stack
+
+- Frontend: React 19 + Vite + React Router + CSS Modules
+- API Proxy: Node.js + Express (`server/index.js`)
+- Persistence (current phase): browser `localStorage`
+
+## Repository Layout
+
+- `src/components` Shared layout and UI shell
+- `src/pages` Route-level screens (home, owners, management, roster, scraper)
+- `src/data` Domain data modules and localStorage adapters
+- `src/services` ESPN fetch/normalize/sync services
+- `src/scrapers` Sport-specific scraper page implementations
+- `src/config` Config store (sports, offices, roles)
+- `server` ESPN proxy server for CORS-safe fetches
+- `public` Static assets
+
+## Runtime Model
+
+- The React app runs on Vite (`:5173`)
+- The proxy server runs on Express (`:3001`)
+- Frontend scraper/services call `/api/...` routes exposed by the proxy
+- Master schedule data is merged into the master store in `src/data/birScheduleMaster.js`
+
+## Development
+
+### Prerequisites
+
+- Node 20+ (recommended)
+
+### Install
 
 ```bash
 npm install
-npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173). The app works on your machine and on your phone on the same network (use your computer’s IP and port 5173).
-
-## Scripts
-
-- **`npm run dev`** – Start dev server (local + LAN)
-- **`npm run server`** – Start ESPN proxy server (port 3001) – required for NBA scraper
-- **`npm run dev:all`** – Run proxy + dev server together
-- **`npm run build`** – Production build
-- **`npm run preview`** – Preview production build locally
-
-### ESPN Scrapers (NBA, NFL, NHL, WNBA, MLB, CBB/NCAAM)
-
-ESPN scrapers fetch schedule data via a local proxy (avoids CORS). **You must run both** the proxy and dev server:
+### Run frontend + proxy together
 
 ```bash
-npm run server    # Terminal 1 – proxy on :3001
-npm run dev       # Terminal 2 – Vite on :5173
+npm run dev:all
 ```
 
-Or use `npm run dev:all` to run both.
+### Run separately
 
-## Project structure
+```bash
+npm run server   # Proxy on :3001
+npm run dev      # Frontend on :5173
+```
 
-- `src/pages/Home.jsx` – Home page with Trader Database and Configuration cards
-- `src/pages/Traders.jsx` – Trader Database (placeholder)
-- `src/pages/Configuration.jsx` – Configuration (placeholder)
-- Responsive layout: mobile-first, safe areas and touch-friendly targets
+## Fixture Seeding (Dev Only)
 
-## Tech stack
+Development seed data is executed by `src/bootstrap/devSeed.js` and only in Vite dev mode.
 
-- React 18 + Vite 5
-- React Router 6
-- CSS Modules, no UI framework (easy to customize and deploy)
+- Default: enabled in dev
+- Disable with environment variable:
+
+```bash
+VITE_ENABLE_FIXTURE_SEED=false
+```
+
+## Build and Preview
+
+```bash
+npm run build
+npm run preview
+```
+
+## Notes for Engineers
+
+- The app currently uses localStorage-backed data modules by design for rapid iteration.
+- Naming with `BIR` refers to the schedule/master subsystem and is still in active use.
+- If scraper routes return 404 after adding endpoints, restart `npm run server`.

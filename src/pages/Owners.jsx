@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 import layoutStyles from './Home.module.css'
 
 const cards = [
-  { title: 'Coverage', href: '/owners/coverage', icon: '📊' },
-  { title: 'Resources', href: '/owners/resources', icon: '📚' },
-  { title: 'Shift Assignment', href: '/owners/shift-assignment', icon: '📋' },
+  { title: 'Coverage', href: '/owners/resources', icon: 'Planning' },
+  { title: 'Requirements', href: '/owners/requirements', icon: 'Needs' },
+  { title: 'Audit', href: '/management/pre-allocation-audit', icon: 'Audit' },
+  { title: 'Assignment', href: '/owners/assignment', icon: 'Assign' },
 ]
 
 export default function Owners() {

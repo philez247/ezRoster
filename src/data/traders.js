@@ -1,24 +1,35 @@
-const STORAGE_KEY = 'ez-roster-traders'
-
-const APP_USER_LEVELS = ['User', 'Owner', 'Manager', 'Admin']
+import { loadTraderDb, updateTraderDb } from './traderDb'
+import { invalidateAllApprovedWeeks } from './allocationInvalidation'
+import { APP_USER_LEVELS } from '../domain/constants/preAllocation'
+import { normalizeTraderBio } from '../domain/traders/model'
 
 function getTradersRaw() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return []
-    const data = JSON.parse(raw)
-    return Array.isArray(data) ? data : []
-  } catch {
-    return []
-  }
+  const db = loadTraderDb()
+  return Object.values(db.traders).map((p) => ({ ...p.bio }))
 }
 
 function saveTraders(traders) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(traders))
-  } catch (e) {
-    console.warn('Failed to save traders:', e)
-  }
+  updateTraderDb((db) => {
+    const nextIds = new Set((traders || []).map((t) => t.traderId))
+    Object.keys(db.traders).forEach((id) => {
+      if (!nextIds.has(id)) delete db.traders[id]
+    })
+    ;(traders || []).forEach((t) => {
+      if (!t?.traderId) return
+      if (!db.traders[t.traderId]) {
+        db.traders[t.traderId] = {
+          traderId: t.traderId,
+          bio: {},
+          preferences: { ranges: [] },
+          requests: [],
+        }
+      }
+      db.traders[t.traderId].bio = normalizeTraderBio({
+        ...t,
+        traderId: t.traderId,
+      })
+    })
+  })
 }
 
 /** Generates a unique Trader ID (e.g. TR-1738...). */
@@ -105,7 +116,7 @@ export function seedTradersIfEmpty() {
 
 /** Default trader shape for new records. */
 export function createBlankTrader() {
-  return {
+  return normalizeTraderBio({
     traderId: generateTraderId(),
     firstName: '',
     lastName: '',
@@ -118,7 +129,7 @@ export function createBlankTrader() {
     manager: '',
     weekendPct: '',
     inShiftPct: '',
-  }
+  })
 }
 
 /** Add a new trader. Returns updated list. */
@@ -127,6 +138,7 @@ export function addTrader(trader) {
   if (list.some((t) => t.traderId === trader.traderId)) return list
   list.push({ ...trader })
   saveTraders(list)
+  invalidateAllApprovedWeeks()
   return getTraders()
 }
 
@@ -137,6 +149,7 @@ export function updateTrader(traderId, updates) {
   if (idx === -1) return getTraders()
   list[idx] = { ...list[idx], ...updates }
   saveTraders(list)
+  invalidateAllApprovedWeeks()
   return getTraders()
 }
 
@@ -144,6 +157,7 @@ export function updateTrader(traderId, updates) {
 export function deleteTrader(traderId) {
   const list = getTradersRaw().filter((t) => t.traderId !== traderId)
   saveTraders(list)
+  invalidateAllApprovedWeeks()
   return getTraders()
 }
 

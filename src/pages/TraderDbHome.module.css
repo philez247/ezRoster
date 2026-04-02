@@ -10,3 +10,76 @@
   color: var(--text);
   text-decoration: underline;
 }
+
+.adminPanel {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 1rem;
+  background: var(--surface, rgba(255, 255, 255, 0.04));
+}
+
+.adminPanelHeader {
+  margin-bottom: 1rem;
+}
+
+.adminPanelTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.adminPanelText {
+  margin: 0.35rem 0 0;
+  color: var(--text-muted);
+}
+
+.adminPanelControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.adminLabel {
+  display: block;
+  width: 100%;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.adminSelect {
+  min-width: min(100%, 22rem);
+  min-height: 42px;
+  padding: 0.65rem 0.8rem;
+  color: var(--text);
+  background: var(--panel, rgba(15, 23, 42, 0.75));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 0.75rem;
+}
+
+.adminButton {
+  min-height: 42px;
+  padding: 0.65rem 0.95rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
+.adminButton:hover {
+  background: var(--accent-hover);
+}
+
+.adminMeta {
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+}
+
+.adminStatus {
+  margin: 0.4rem 0 0;
+  color: var(--text);
+}

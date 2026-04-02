@@ -5,6 +5,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
+  max-width: 100%;
+  align-self: stretch;
 }
 
 .back {
@@ -144,12 +147,6 @@
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
-}
-
-@media (min-width: 600px) {
-  .availabilityGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .availabilityBlock {

@@ -4,7 +4,7 @@ import {
   syncMlbScoreboardRange,
   todayYYYYMMDD,
 } from '../../services/espnMlb'
-import { compareWithMasterDetailed, mergeGamesIntoMaster } from '../../data/birScheduleMaster'
+import { compareWithMasterDetailed, mergeGamesIntoMaster, getMasterChangeHistory } from '../../data/birScheduleMaster'
 import { formatDatePhone, formatDateDesktop } from '../../utils/dateFormat'
 import styles from './MlbScraper.module.css'
 
@@ -74,6 +74,15 @@ function gamesToCsv(games) {
   return [headers.join(','), ...rows].join('\n')
 }
 
+function formatDetectedAt(iso) {
+  if (!iso) return '—'
+  try {
+    return new Date(iso).toLocaleString('en-GB', { hour12: false })
+  } catch {
+    return iso
+  }
+}
+
 export default function MlbScraperPage() {
   const today = toDateInput(todayYYYYMMDD())
   const [startDate, setStartDate] = useState(today)
@@ -87,6 +96,8 @@ export default function MlbScraperPage() {
   const [showJson, setShowJson] = useState(false)
   const [showMoreOptions, setShowMoreOptions] = useState(false)
   const [selectedGame, setSelectedGame] = useState(null)
+  const [showChangesModal, setShowChangesModal] = useState(false)
+  const recentMasterChanges = getMasterChangeHistory({ sport: 'MLB', limit: 100 })
 
   function formatProgressDate(yyyymmdd) {
     if (!yyyymmdd || yyyymmdd.length !== 8) return '—'
@@ -273,6 +284,13 @@ export default function MlbScraperPage() {
                   >
                     JSON
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowChangesModal(true)}
+                    className={styles.secondaryBtn}
+                  >
+                    CHANGES
+                  </button>
                 </div>
               </div>
             )}
@@ -348,6 +366,63 @@ export default function MlbScraperPage() {
                   Cancel
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showChangesModal && (
+        <div
+          className={styles.modalBackdrop}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="master-changes-title"
+          onClick={() => setShowChangesModal(false)}
+        >
+          <div
+            className={styles.modalPanel}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.modalHeader}>
+              <h2 id="master-changes-title" className={styles.modalTitle}>
+                Recent Master Changes
+              </h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowChangesModal(false)}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              {recentMasterChanges.length === 0 ? (
+                <p className={styles.compareSummary}>No recorded MLB master changes yet.</p>
+              ) : (
+                <ul className={styles.syncChangesList}>
+                  {recentMasterChanges.map((change, idx) => (
+                    <li key={change.id || `${change.gameId}-${idx}`}>
+                      <strong>{change.event || eventName(change.after || change.before || {})}</strong>
+                      <div className={styles.modalRow}>
+                        <span className={styles.modalLabel}>When</span>
+                        <span className={styles.modalValue}>{formatDetectedAt(change.detectedAt)}</span>
+                      </div>
+                      <div className={styles.modalRow}>
+                        <span className={styles.modalLabel}>Type</span>
+                        <span className={styles.modalValue}>{change.type || 'GAME_UPDATED'}</span>
+                      </div>
+                      {Array.isArray(change.diffs) && change.diffs.length > 0 && (
+                        <ul className={styles.syncDiffsList}>
+                          {change.diffs.map((d, i) => (
+                            <li key={`${change.id || idx}-d-${i}`}>{d}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>

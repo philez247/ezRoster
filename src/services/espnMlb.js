@@ -47,14 +47,20 @@ function datesInRange(startYYYYMMDD, endYYYYMMDD) {
  * Sync MLB scoreboard for a given date (YYYYMMDD).
  * @param {string} date - YYYYMMDD
  * @param {(date: string, gamesCount: number) => void} [onProgress]
- * @returns {Promise<{ games: Game[], fetchedAtIso: string }>}
+ * @param {{ skipMerge?: boolean }} [opts]
+ * @returns {Promise<{ games: Game[], fetchedAtIso: string, added?: number, updated?: number }>}
  */
-export async function syncMlbScoreboard(date, onProgress) {
+export async function syncMlbScoreboard(date, onProgress, opts = {}) {
   const data = await fetchScoreboardViaProxy('mlb', date)
   const games = normalizeEspnScoreboardToGames(data).map((g) => ({ ...g, sport: 'MLB' }))
   if (onProgress) onProgress(date, games.length, 1, 1)
   const fetchedAtIso = new Date().toISOString()
-  const { added, updated } = mergeGamesIntoMaster(games, 'MLB', fetchedAtIso)
+  let added, updated
+  if (!opts.skipMerge) {
+    const result = mergeGamesIntoMaster(games, 'MLB', fetchedAtIso)
+    added = result.added
+    updated = result.updated
+  }
   return { games, fetchedAtIso, added, updated }
 }
 

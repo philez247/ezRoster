@@ -369,7 +369,7 @@
   min-width: 120px;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0;
 }
 
 .prefFieldLabel {
@@ -475,7 +475,7 @@
 }
 
 .prefCardPanel[data-open="true"] {
-  max-height: 280px;
+  max-height: 340px;
 }
 
 .prefCardPanel[data-open="false"] {
@@ -508,6 +508,12 @@
 .prefSelect:focus {
   outline: none;
   border-color: var(--accent);
+}
+
+.prefSelect:disabled {
+  color: var(--text-muted-on-surface);
+  background: #f3f4f6;
+  cursor: not-allowed;
 }
 
 /* Preferences read-only view */

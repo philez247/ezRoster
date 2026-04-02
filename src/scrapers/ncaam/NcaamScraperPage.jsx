@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { syncNcaamD1Teams } from '../../services/espnNcaamD1'
-import { syncNcaamScoreboard, todayYYYYMMDD } from '../../services/espnNcaamScoreboard'
-import { compareWithMasterDetailed, mergeGamesIntoMaster } from '../../data/birScheduleMaster'
+import { syncNcaamScoreboard, syncNcaamScoreboardRange, todayYYYYMMDD } from '../../services/espnNcaamScoreboard'
+import { compareWithMasterDetailed, mergeGamesIntoMaster, getMasterChangeHistory } from '../../data/birScheduleMaster'
 import { getNcaamTeamsD1 } from '../../data/ncaamTeams'
 import { formatDatePhone, formatDateDesktop } from '../../utils/dateFormat'
 import styles from './NcaamScraper.module.css'
@@ -77,6 +77,15 @@ function gamesToCsv(games) {
   return [headers.join(','), ...rows].join('\n')
 }
 
+function formatDetectedAt(iso) {
+  if (!iso) return '—'
+  try {
+    return new Date(iso).toLocaleString('en-GB', { hour12: false })
+  } catch {
+    return iso
+  }
+}
+
 export default function NcaamScraperPage() {
   const today = toDateInput(todayYYYYMMDD())
   const [startDate, setStartDate] = useState(today)
@@ -85,6 +94,7 @@ export default function NcaamScraperPage() {
   const [loadingTeams, setLoadingTeams] = useState(false)
   const [error, setError] = useState(null)
   const [showMoreOptions, setShowMoreOptions] = useState(false)
+  const [showChangesModal, setShowChangesModal] = useState(false)
   const [showJson, setShowJson] = useState(false)
   const [showD1TeamsModal, setShowD1TeamsModal] = useState(false)
   const [selectedGame, setSelectedGame] = useState(null)
@@ -94,6 +104,7 @@ export default function NcaamScraperPage() {
   const [showSyncModal, setShowSyncModal] = useState(false)
   const [syncPreview, setSyncPreview] = useState(null)
   const [storedTeams, setStoredTeams] = useState(() => getNcaamTeamsD1())
+  const recentMasterChanges = getMasterChangeHistory({ sport: 'NCAAM', limit: 100 })
 
   const refreshStored = () => {
     setStoredTeams(getNcaamTeamsD1())
@@ -101,8 +112,13 @@ export default function NcaamScraperPage() {
 
   const handleImportFromEspn = async () => {
     const start = toYYYYMMDD(startDate)
-    if (!start || start.length !== 8) {
-      setError('Please select a valid date.')
+    const end = toYYYYMMDD(endDate)
+    if (!start || start.length !== 8 || !end || end.length !== 8) {
+      setError('Please select valid start and end dates.')
+      return
+    }
+    if (start > end) {
+      setError('Start date must be before or equal to end date.')
       return
     }
     setError(null)
@@ -110,7 +126,9 @@ export default function NcaamScraperPage() {
     setRunFetchedAtIso(null)
     setLoading(true)
     try {
-      const result = await syncNcaamScoreboard(start, { skipSave: true, skipMerge: true })
+      const result = start === end
+        ? await syncNcaamScoreboard(start, { skipSave: true, skipMerge: true })
+        : await syncNcaamScoreboardRange(start, end, { skipSave: true, skipMerge: true })
       setRunGames(result.games || [])
       setRunFetchedAtIso(result.fetchedAtIso || null)
       refreshStored()
@@ -275,6 +293,13 @@ export default function NcaamScraperPage() {
                   >
                     JSON
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowChangesModal(true)}
+                    className={styles.secondaryBtn}
+                  >
+                    CHANGES
+                  </button>
                 </div>
                 <div className={styles.d1Row}>
                   <button
@@ -365,6 +390,63 @@ export default function NcaamScraperPage() {
                   Cancel
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showChangesModal && (
+        <div
+          className={styles.modalBackdrop}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="master-changes-title"
+          onClick={() => setShowChangesModal(false)}
+        >
+          <div
+            className={styles.modalPanel}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.modalHeader}>
+              <h2 id="master-changes-title" className={styles.modalTitle}>
+                Recent Master Changes
+              </h2>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setShowChangesModal(false)}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              {recentMasterChanges.length === 0 ? (
+                <p className={styles.compareSummary}>No recorded NCAAM master changes yet.</p>
+              ) : (
+                <ul className={styles.syncChangesList}>
+                  {recentMasterChanges.map((change, idx) => (
+                    <li key={change.id || `${change.gameId}-${idx}`}>
+                      <strong>{change.event || eventName(change.after || change.before || {})}</strong>
+                      <div className={styles.modalRow}>
+                        <span className={styles.modalLabel}>When</span>
+                        <span className={styles.modalValue}>{formatDetectedAt(change.detectedAt)}</span>
+                      </div>
+                      <div className={styles.modalRow}>
+                        <span className={styles.modalLabel}>Type</span>
+                        <span className={styles.modalValue}>{change.type || 'GAME_UPDATED'}</span>
+                      </div>
+                      {Array.isArray(change.diffs) && change.diffs.length > 0 && (
+                        <ul className={styles.syncDiffsList}>
+                          {change.diffs.map((d, i) => (
+                            <li key={`${change.id || idx}-d-${i}`}>{d}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>
